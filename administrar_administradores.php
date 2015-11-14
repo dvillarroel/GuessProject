@@ -8,7 +8,7 @@
 <p>ADMINISTRACION DE ADMINSTRADORES DEL SISTEMA</p>
 <p>&nbsp;</p>
 <p><a href="registrar_administrador.php">(+) Registrar un nuevo Administrador</a></p>
-<p><a href="actualizar_administrador.php">Actualizar Datos Administrador existente</a></p>
+<p><a href="modificar_administrador_menu.php">Modificar los Datos de un Administrador existente</a></p>
 <p><a href="dar_baja_administrador.php">Deshabilitar Administrador</a></p>
 
 
