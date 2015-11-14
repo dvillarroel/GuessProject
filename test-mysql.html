@@ -1,0 +1,20 @@
+<script src="mysqlwslib.js"></script>
+
+
+<script>
+
+
+var availableTags = [];
+var arrayResult = mysql_select_query ("select nombre_producto from producto order by nombre_producto");
+console.log(arrayResult.length);
+availableTags = arrayResult;
+
+for (i=0; i< arrayResult.length; i++) 
+{
+    //availableTags.push(arrayResult[i]);
+	console.log(arrayResult[i][0]);
+	
+}
+//console.log(availableTags);
+
+</script>
