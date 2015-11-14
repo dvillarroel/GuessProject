@@ -1,4 +1,4 @@
-<title> REGISTRAR NUEVO VENDEDOR</title>
+<title> MODIFICAR NUEVO VENDEDOR</title>
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
 <body background="body2.jpg">
@@ -7,12 +7,15 @@
  <SCRIPT language="javascript">
 
 </SCRIPT>
-<?
-	$tipo=$_GET['menu1'];
-	$var=$_GET['buscar'];
+<?php
+
+	$tipo=isset($_GET['menu1']) ? $_GET['menu1']: '';
+	$var=isset($_GET['id']) ? $_GET['id']: ''; 
 	require_once("manejomysql.php");
 	conectar_bd();
+	//echo "SELECT cod_persona, cod_usuario, cod_rol, nombre, apellidop,apellidom, ci, telefono, direccion, email, descripcion FROM persona WHERE cod_persona=$var;";
 	$usuario_consulta = mysql_query("SELECT cod_persona, cod_usuario, cod_rol, nombre, apellidop,apellidom, ci, telefono, direccion, email, descripcion FROM persona WHERE cod_persona=$var;" ) or die(heer ("Location:error.php"));
+	
 
 				$registro= sacar_registro_bd($usuario_consulta);
 				
@@ -50,7 +53,7 @@
     <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
   </tr>
 </table>
-<form action="modificar_vendedor3.php" method="post" name="ventas" onSubmit="return validarFormulario(this);">
+<form action="modificar_vendedor3.php?id_persona=<?php echo $codigo_persona;?>&id_user=<?php echo $codigo_usuario;?>" method="post" name="ventas" onSubmit="return validarFormulario(this);">
 
 <table width="80%" align="center" cellpadding="0" cellspacing="0">
   <tbody>
@@ -74,27 +77,27 @@
           </tr>
             <tr> 
               <td width="25%" class="campotablas">Nombre:</td>
-            <td width="25%" class="campotablas"><input type="text" name="nombre" maxlength="15" tabindex="3" class="Formulario" value="<? echo $nombre;?>"></td>
+            <td width="25%" class="campotablas"><input type="text" name="nombre" maxlength="15" tabindex="3" class="Formulario" value="<?php echo $nombre;?>"></td>
               <td width="25%" class="campotablas">CI:</td>
-            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario" value="<? echo $ci;?>">            </td>
+            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario" value="<?php echo $ci;?>">            </td>
           </tr>
           <tr> 
               <td class="campotablas">Apellido Paterno:</td>
-            <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario" value="<? echo $apellido_paterno;?>">            </td>
+            <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario" value="<?php echo $apellido_paterno;?>">            </td>
               <td class="campotablas">Telefono:</td>
-            <td class="campotablas"><input name="telefono" type="text" class="Formulario" tabindex="4" maxlength="17" value="<? echo $telefono;?>" >            </td>
+            <td class="campotablas"><input name="telefono" type="text" class="Formulario" tabindex="4" maxlength="17" value="<?php echo $telefono;?>" >            </td>
           </tr>
 		  
 		  <tr> 
               <td height="113"class="campotablas">Apellido Materno:</td>
-            <td class="campotablas"> <input type="text" name="apellido_materno"  maxlength="25" tabindex="5" class="Formulario" value="<? echo $apellido_materno;?>">            </td>
+            <td class="campotablas"> <input type="text" name="apellido_materno"  maxlength="25" tabindex="5" class="Formulario" value="<?php echo $apellido_materno;?>">            </td>
               <td class="campotablas">Direccion:</td>
-            <td class="campotablas"><input type="text" name="direccion" maxlength="255" tabindex="6" class="Formulario" value="<? echo $direccion;?>">            </td>
+            <td class="campotablas"><input type="text" name="direccion" maxlength="255" tabindex="6" class="Formulario" value="<?php echo $direccion;?>">            </td>
           </tr>
           
           <tr> 
               <td class="campotablas">Correo Electronico:</td>
-            <td class="campotablas"><input name="email" type="text" class="Formulario" tabindex="7" value="test@hotmail.com"  maxlength="45" value="<? echo $email;?>"></td>
+            <td class="campotablas"><input name="email" type="text" class="Formulario" tabindex="7" value="test@hotmail.com"  maxlength="45" value="<?php echo $email;?>"></td>
               <td class="campotablas">&nbsp;</td>
            <td class="campotablas">&nbsp;</td>
           </tr>
@@ -114,32 +117,32 @@
           </tr>
             <tr> 
               <td width="50%" class="campotablas">Nombre de Usuario:</td>
-            <td width="50%" class="campotablas"><input type="text" name="username" maxlength="15" tabindex="3" class="Formulario" value="<? echo $nombre_usuario;?>"></td>
+            <td width="50%" class="campotablas"><input type="text" name="username" maxlength="15" tabindex="3" class="Formulario" value="<?php echo $nombre_usuario;?>"></td>
           </tr>
           <tr> 
               <td class="campotablas">Contrase&ntilde;a:</td>
-            <td class="campotablas"><input type="password" name="pwd" maxlength="15" tabindex="3" class="Formulario" value="<? echo $password;?>">            </td>
+            <td class="campotablas"><input type="password" name="pwd" maxlength="15" tabindex="3" class="Formulario" value="<?php echo $password;?>">            </td>
           </tr>
 		  
 		  <tr> 
               <td height="113"class="campotablas">Repetir Contrase&ntilde;a:</td>
-            <td class="campotablas"> <input type="password" name="pwd2"  maxlength="25" tabindex="5" class="Formulario" value="<? echo $password;?>">            </td>
+            <td class="campotablas"> <input type="password" name="pwd2"  maxlength="25" tabindex="5" class="Formulario" value="<?php echo $password;?>">            </td>
           </tr>
           
           <tr> 
               <td class="campotablas">Estado de la Cuenta</td>
             <td class="campotablas"><select name="1" id="1">
-                    <option <? 
+                    <option <?php 
 					if($estado == "Activo")
 					{
 						echo '
 						selected>Activo</option>
-      <option>No Activo</option>';
+      <option>Inactivo</option>';
 					}
 					else
 					{
 						echo '>Activo</option>
-      <option selected>No Activo</option>';
+      <option selected>Inactivo</option>';
 						
 						}
 					
@@ -169,7 +172,7 @@
       <td width="32%" height="24"  class="title" >OBSERVACIONES</td>
     </tr>
     <tr> 
-      <td > <textarea name="observaciones" class="interiorArea" style="WIDTH: 100%; HEIGHT: 60px" ><? echo $descripcion;?></textarea> </td>
+      <td > <textarea name="observaciones" class="interiorArea" style="WIDTH: 100%; HEIGHT: 60px" ><?php echo $descripcion;?></textarea> </td>
     </tr>
   </table>
 

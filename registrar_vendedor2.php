@@ -13,7 +13,7 @@ if(!empty($_POST['nombre']) && !empty($_POST['ci']) && !empty($_POST['apellido_p
 	$direccion=$_POST['direccion'];
 	$email=$_POST['email'];
 	$observaciones=$_POST['observaciones'];
-	$estado='activo';
+	$estado='Activo';
 	$username=$_POST['username'];
 	$pwd=$_POST['pwd'];
 	$pwd2=$_POST['pwd2'];

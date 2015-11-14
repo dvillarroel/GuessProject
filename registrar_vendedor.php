@@ -1,4 +1,4 @@
-<? 
+<?php
   // No almacenar en el cache del navegador esta página.
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");             		// Expira en fecha pasada
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");		// Siempre página modificada
@@ -108,7 +108,7 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
               <td class="campotablas">Estado de la Cuenta</td>
             <td class="campotablas"><select name="1" id="1">
                     <option selected>Activo</option>
-      <option>No Activo</option>
+      <option>Inactivo</option>
                 </select></td>
 
           </tr>
