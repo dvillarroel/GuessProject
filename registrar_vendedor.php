@@ -11,12 +11,116 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
 
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
+ <script>
+	console.log("function javascript");
+
+	function validarFormulario()
+	{
+		valor = document.getElementById("nombreField").value;
+		id = document.getElementById("ciField").value;
+		ap = document.getElementById("apField").value;
+		am = document.getElementById("amField").value;
+		username = document.getElementById("username").value;
+		pwd_1= document.getElementById("password1").value;
+		pwd_2= document.getElementById("password2").value;
+		tel= document.getElementById("telf").value;
+
+		
+		console.log(valor);
+		returnvalue = true;
+
+				if( valor == null || valor.length == 0)
+		{
+			console.log("entro");
+			alert("El Nombre no puede estar vacio");
+			return false;
+		}
+		
+		if( id == null || id.length == 0)
+		{
+			console.log("entro");
+			alert("El CI no puede estar vacio");
+			return false;
+		}
+		else
+		{
+			var i=0;
+			while (i<id.length)
+			{	
+				if ((id.charAt(i)>='0') && (id.charAt(i)<='9'))
+				i=i+1;
+				else
+				{
+					alert("El CI tiene que ser numeral de 7 digitos");
+					return false;
+				}
+			}
+			
+		}
+
+		if( tel == null || tel.length == 0)
+		{
+			console.log("entro");
+			alert("El telefono no puede estar vacio");
+			return false;
+		}
+		else
+		{
+			var i=0;
+			while (i<tel.length)
+			{	
+				if ((tel.charAt(i)>='0') && (tel.charAt(i)<='9'))
+				i=i+1;
+				else
+				{
+					alert("El telefono tiene que ser numeral");
+					return false;
+				}
+			}
+			
+		}
+
+		
+		if( ap == null || ap.length == 0)
+		{
+			alert("El Apellido Paterno no puede estar vacio");
+			return false;
+		}
+		if( username == null || username.length == 0)
+		{
+			alert("El nombre de usuario no puede estar vacio");
+			return false;
+		}
+
+				if( pwd_1 == null || pwd_2.length == 0)
+		{
+			alert("El password no puede esta vacio");
+			return false;
+		}
+		else
+		{	
+			if( pwd_1 != pwd_2)
+			{
+				alert("El password no coinciden");
+				return false;
+
+			}
+			
+		}
+
+		if( username == null || username.length == 0)
+		{
+			alert("El nombre de usuario no puede estar vacio");
+			return false;
+		}
+
+		
+	 }
+</script>
+
+
 <body background="body2.jpg">
  
- <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
- <SCRIPT language="javascript">
-
-</SCRIPT>
 
 <br>
 <table width="40%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -28,7 +132,7 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
     <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
   </tr>
 </table>
-<form action="registrar_vendedor2.php" method="post" name="ventas" onSubmit="return validarFormulario(this);">
+<form action="registrar_vendedor2.php" method="post" name="ventas" onSubmit="return validarFormulario();">
 
 <table width="80%" align="center" cellpadding="0" cellspacing="0">
   <tbody>
@@ -52,20 +156,20 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
           </tr>
             <tr> 
               <td width="25%" class="campotablas">Nombre:</td>
-            <td width="25%" class="campotablas"><input type="text" name="nombre" maxlength="15" tabindex="3" class="Formulario"></td>
+            <td width="25%" class="campotablas"><input id="nombreField" type="text" name="nombre" maxlength="15" tabindex="3" class="Formulario"></td>
               <td width="25%" class="campotablas">CI:</td>
-            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario">            </td>
+            <td width="25%" class="campotablas"><input id="ciField" type="text" name="ci" maxlength="20" tabindex="2" class="Formulario">            </td>
           </tr>
           <tr> 
               <td class="campotablas">Apellido Paterno:</td>
-            <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario">            </td>
+            <td class="campotablas"><input id="apField" type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario">            </td>
               <td class="campotablas">Telefono:</td>
-            <td class="campotablas"><input name="telefono" type="text" class="Formulario" tabindex="4" maxlength="17"  >            </td>
+            <td class="campotablas"><input id="telf" name="telefono" type="text" class="Formulario" tabindex="4" maxlength="17"  >            </td>
           </tr>
 		  
 		  <tr> 
               <td height="113"class="campotablas">Apellido Materno:</td>
-            <td class="campotablas"> <input type="text" name="apellido_materno"  maxlength="25" tabindex="5" class="Formulario">            </td>
+            <td class="campotablas"> <input id="amField" type="text" name="apellido_materno"  maxlength="25" tabindex="5" class="Formulario">            </td>
               <td class="campotablas">Direccion:</td>
             <td class="campotablas"><input type="text" name="direccion" maxlength="255" tabindex="6" class="Formulario">            </td>
           </tr>
@@ -92,16 +196,16 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
           </tr>
             <tr> 
               <td width="50%" class="campotablas">Nombre de Usuario:</td>
-            <td width="50%" class="campotablas"><input type="text" name="username" maxlength="15" tabindex="3" class="Formulario"></td>
+            <td width="50%" class="campotablas"><input id="username" type="text" name="username" maxlength="15" tabindex="3" class="Formulario"></td>
           </tr>
           <tr> 
               <td class="campotablas">Contrase&ntilde;a:</td>
-            <td class="campotablas"><input type="password" name="pwd" maxlength="15" tabindex="3" class="Formulario">            </td>
+            <td class="campotablas"><input id="password1" type="password" name="pwd" maxlength="15" tabindex="3" class="Formulario">            </td>
           </tr>
 		  
 		  <tr> 
               <td height="113"class="campotablas">Repetir Contrase&ntilde;a:</td>
-            <td class="campotablas"> <input type="password" name="pwd2"  maxlength="25" tabindex="5" class="Formulario">            </td>
+            <td class="campotablas"> <input id="password2" type="password" name="pwd2"  maxlength="25" tabindex="5" class="Formulario">            </td>
           </tr>
           
           <tr> 

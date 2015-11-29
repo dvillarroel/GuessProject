@@ -1,7 +1,5 @@
 <?php
 
-if(!empty($_POST['nombre']) && !empty($_POST['ci']) && !empty($_POST['apellido_paterno']) )
-{
 
 	require_once("manejomysql.php");
 	conectar_bd();
@@ -31,7 +29,7 @@ if(!empty($_POST['nombre']) && !empty($_POST['ci']) && !empty($_POST['apellido_p
 	$consulta="insert into usuario values('$nc', '$username', '$pwd','$estado');";
 //	echo $consulta;
 
-	mysql_query($consulta) or die(header ("Location:registrar_producto.php?error_registro=2"));
+	mysql_query($consulta);
 
 			$resultado= consulta_bd("SELECT max(cod_persona) as p FROM persona" );
 			$a=sacar_registro_bd($resultado);
@@ -43,21 +41,13 @@ if(!empty($_POST['nombre']) && !empty($_POST['ci']) && !empty($_POST['apellido_p
 
 
 	$consulta2="insert into persona values('$cp', '$nc', '$cr','$nombre','$apellido_paterno','$apellido_materno', $ci, $telefono,'$direccion', '$email', '$observaciones');";
-  //  echo $consulta2;
+//    echo $consulta2;
 
 
-	mysql_query($consulta2) or die(header ("Location:registrar_producto.php?error_registro=2"));
+	mysql_query($consulta2);
 	
 	//copy($image, $new) or die("Unable to copy $old to $new.");
 
-}
-
-else
-{
-	header ("Location:registrar_producto.php?error_registro=1");
-	exit;
-
-}
 
 
 ?>
