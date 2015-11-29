@@ -17,7 +17,7 @@ function conectar_bd()
    global $usuario;
    global $clave;
    global $BD;
-$enlace= mysql_connect("localhost","root","") or die(mysql_error());
+$enlace= mysql_connect("localhost","root","root") or die(mysql_error());
 mysql_select_db("motos") or die(mysql_error());  
 
 			//echo "nos conectamos
