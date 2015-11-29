@@ -3,7 +3,10 @@ header('Content-Type: text/xml');
 header("Cache-Control: no-store, no-cache, must-revalidate");
 
 // Los valores $host, $user, $pw, $db se deben de adaptar a cada instalación
-$host="192.168.32.130";
+$host2= gethostname();
+$ip = gethostbyname($host2);
+$host=$ip;
+
 $user="dvuser";
 $pw="Control123";
 // Indicar el nombre de una base de datos que se abrirá por defecto

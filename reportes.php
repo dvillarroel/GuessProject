@@ -12,6 +12,7 @@
 <p><a href="listar_productos_pedido.php">Listar Productos para pedido</a></p>
 <p><a href="listar_productos_impresion.php">Imprimir Inventario</a></p>
 <p><a href="Exportar_inventarios_pfg.php" target="_blank">Exportar Inventarios PDF</a></p>
+<p><a href="write_excel.php">Exportar Inventarios a Excel</a></p>
 <p>&nbsp;</p>
 <p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
 </body>
