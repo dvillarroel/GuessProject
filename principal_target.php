@@ -1,42 +1,97 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
 </head>
-<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-<body background="body2.jpg">
-<div id="Layer1" ><font color="#330000" size="2"><strong>Bienvenido 
-  Usuario :
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+ 
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Principal <span class="mif-apps place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
+                    <button class="button primary" onclick="pushMessage('info')"><span class="mif-plus"></span> Cuentas</button>
+                    <button class="button success" onclick="pushMessage('success')"><span class="mif-play"></span> Clientes</button>
+                    <button class="button warning" onclick="pushMessage('warning')"><span class="mif-loop2"></span> Pedidos</button>
+                    <button class="button alert" onclick="pushMessage('alert')">Reportes</button>
+                    <hr class="thin bg-grayLighter">
+
 <?php
-//session_register('motos');
 require_once("manejomysql.php");
 conectar_bd();
-//$cod=$_GET['cu'];
-
-//echo $cod;
-//echo $consulta;
-$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
-$querydatos = sacar_registro_bd($queryuser);
-$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']) or die("no se realizo");
-$querydatosuser = sacar_registro_bd($consultauser);
-echo $querydatosuser['nombre']." ".$querydatosuser['apellidoP']." ".$querydatosuser['apellidoM'];
 
 $usuario_consulta = mysql_query("SELECT nombre_producto, nombre_chino, nombre_ingles, stock, stock_minimo, unidad FROM producto where stock < stock_minimo order by nombre_producto;" );
 
 if (mysql_num_rows($usuario_consulta) > 0)
 {	
-echo '<br><br>Hay productos que estan debajo del stock minimo:
-				<br>
-<br>
-';
 
-	echo '<table width="40%" border="0" cellpadding="0" cellspacing="0">
-  	<tr>
-    <td class="title" width="20%">Castellano</td>
-    <td class="title" width="20%">Stock actual</td>
-    <td class="title" width="20%">Stock Minimo</td>
-  	</tr>';
+echo '<br><h1 class="text-light">Hay productos que estan debajo del stock minimo: </h1><br>';
+
+					echo '<table class="dataTable border bordered" data-role="datatable" data-auto-width="false">
+                        <thead>
+                        <tr>
+                            <td class="sortable-column sort-asc">Nombre Producto</td>
+                            <td class="sortable-column">Stock Actual</td>
+                            <td class="sortable-column">Stock Minimo</td>
+                        </tr>
+                        </thead>
+                        <tbody>';
+
 
 	for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 	{
@@ -45,25 +100,29 @@ echo '<br><br>Hay productos que estan debajo del stock minimo:
 		
 		if($registro['stock'] < $registro['stock_minimo'] || $registro['stock'] == $registro['stock_minimo'])
 		{
-			
-		echo "<tr>";
-		echo "
-				<td class='campotablas'>".$registro['nombre_producto']."</td>
-    			<td class='campotablasSTOCK'><font color='FF0000'>".$registro['stock']."</font></td>
-    			<td class='campotablas'>".$registro['stock_minimo']." </td>";
-			
-		echo "</tr>";
+		              echo "<tr>
+                            <td>".$registro['nombre_producto']."</td>
+                            <td>".$registro['stock']."</td>
+                            <td>".$registro['stock_minimo']."</td>
+                           </tr>";
 		}
 		
 	}	
-	echo '</table>';
+	echo '                    </tbody>
+                    </table>';
 
 	
 	}
 
 				
 ?> 
-  
-  </strong></font></div>
+                    
+					
+
+                </div>
+            </div>
+		</div>
+	</div>
 </body>
 </html>
+

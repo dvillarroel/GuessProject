@@ -32,7 +32,7 @@ echo '<title> REGISTRAR NUEVO VENDEDOR</title>';
 				if( valor == null || valor.length == 0)
 		{
 			console.log("entro");
-			alert("El Nombre no puede estar vacio");
+			window.alert("El Nombre no puede estar vacio");
 			return false;
 		}
 		

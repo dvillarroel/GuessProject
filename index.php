@@ -1,69 +1,97 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Sistema de Administracion Clientes</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK 
-href="hoja_de_estilo.css" type=text/css 
-rel=stylesheet>
-<script language="JavaScript" type="text/JavaScript">
-<!--
-function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-}
-MM_reloadPage(true);
-//-->
-</script>
-<script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+
+    <title>SISTEMA DE ADMINISTRACION</title>
+
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/metro.js"></script>
+ 
+    <style>
+        .login-form {
+            width: 25rem;
+            height: 18.75rem;
+            position: fixed;
+            top: 50%;
+            margin-top: -9.375rem;
+            left: 50%;
+            margin-left: -12.5rem;
+            background-color: #ffffff;
+            opacity: 0;
+            -webkit-transform: scale(.8);
+            transform: scale(.8);
+        }
+    </style>
+
+    <script>
+
+        /*
+        * Do not use this is a google analytics fro Metro UI CSS
+        * 
+        if (window.location.hostname !== 'localhost') {
+
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-58849249-3', 'auto');
+            ga('send', 'pageview');
+
+        }
+
+		*/
+        $(function(){
+            var form = $(".login-form");
+
+            form.css({
+                opacity: 1,
+                "-webkit-transform": "scale(1)",
+                "transform": "scale(1)",
+                "-webkit-transition": ".5s",
+                "transition": ".5s"
+            });
+        });
+		
+    </script>
 </head>
-<body background="body2.jpg">
-
-<div id="Layer2" style="position:absolute; left:245px; top:40px; width:185px; height:157px; z-index:2"></div>
-<div id="Layer3" style="position:absolute; left:440px; top:40px; width:405px; height:93px; z-index:3">
-  <div align="center"><font color="#330000" size="6" face="Times New Roman, Times, serif"><strong>SISTEMA DE ADMINISTRACI&Oacute;N 
-    DE PRODUCTOS</strong></font></div>
-</div>
-
-<div align="center"  id="Layer1" > </div>
-
-<div id="Layer1" style="position:absolute; left:446px; top:179px; width:275px; height:251px; z-index:1" align="center">
-  <form action="validar.php" method="post">
-    <table width="280" border="0" cellpadding="0" cellspacing="0" bordercolor="#0066FF" align="center">
-      <tr> 
-        <td background="images\arriba.gif">&nbsp;</td>
-      </tr>
-      <tr> 
-        <td height="120" width="280" background="images\cuerpo2.jpg" ><table width="247" border="0" align="center">
-            <tr> 
-              <td colspan="2" height="35" class="titulo_it2">INICIAR SESI&Oacute;N</td>
-            </tr>
-            <tr> 
-              <td class="titulo_it3" >Nombre Usuario</td>
-              <td ><input class="Formulario"  type="text" name="text1" > </td>
-            </tr>
-            <tr> 
-              <td><font  class="titulo_it3">Constrase&ntilde;a</font></td>
-              <td> <input class="Formulario" type="password" name="text2" > </td>
-            </tr>
-            <tr> 
-              <td  height="45" colspan="2"><div align="center"> 
-                  <input name="image"  type="image" onMouseOver= src="images/I1.gif" onMouseMove= src="images/I1.gif" onMouseOut=src="images/I2.gif" value="" SRC="images/I2.gif">
-                </div></td>
-            </tr>
-          </table></td>
-      </tr>
-      <tr> 
-        <td height="30" background="images\abajo.jpg">&nbsp;</td>
-      </tr>
-    </table>
-    <div align="center"><BR>
-      <BR>
+<body class="bg-darkTeal">
+    <div class="login-form padding20 block-shadow">
+        <form action="validar.php" method="post">
+            <h1 class="text-light">Acceder al Sistema</h1>
+            <hr class="thin"/>
+            <br />
+            <div class="input-control text full-size" data-role="input">
+                <label for="user_login">Nombre de Usuario:</label>
+                <input type="text" name="text1" id="user_login">
+                <button class="button helper-button clear"><span class="mif-cross"></span></button>
+            </div>
+            <br />
+            <br />
+            <div class="input-control password full-size" data-role="input">
+                <label for="user_password">Contrase&#241a:</label>
+                <input type="password" name="text2" id="user_password">
+                <button class="button helper-button reveal"><span class="mif-looks"></span></button>
+            </div>
+            <br />
+            <br />
+            <div class="form-actions">
+                <button type="submit" class="button primary">Ingresar</button>
+            </div>
+        </form>
     </div>
-  </form>
-</div>
-<div id="Layer4" style="position:absolute; left:394px; top:425px; width:366px; height:96px; z-index:4">
+
+	<div>
+	<br>
+	<br>
+	<br>
+		<br>
+	<br>
+	<br>
 <?php
 if( !empty($_GET['error_login']) )
 {
@@ -92,9 +120,10 @@ if( !empty($_GET['error_login']) )
 		$respuesta='SU CUENTA SE ENCUENTRA DESHABILITADA, CONSULTE CON SU ADMINISTRADOR';
 	}
 	
-	echo '<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">'.$respuesta.'</font></td>
+	echo '<table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
+  		
+		<tr>
+    		<td><font color="#FFFFFF">'.$respuesta.'</font></td>
   		</tr>
 	</table>';
 
@@ -102,5 +131,6 @@ if( !empty($_GET['error_login']) )
 }
 
 ?></div>
+
 </body>
 </html>

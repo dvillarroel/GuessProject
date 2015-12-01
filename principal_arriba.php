@@ -1,49 +1,96 @@
-<? 
-  // No almacenar en el cache del navegador esta página.
-		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");             		// Expira en fecha pasada
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");		// Siempre página modificada
-		header("Cache-Control: no-cache, must-revalidate");           		// HTTP/1.1
-		header("Pragma: no-cache");                                   		// HTTP/1.0 
-?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<script language="JavaScript" type="text/JavaScript">
-<!--
-function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-}
-MM_reloadPage(true);
-//-->
-</script>
-<script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 50%;
+            height: 50%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
 </head>
+<body class="bg-steel">
 
-<body background="body2.jpg" leftMargin=0 topMargin=0 marginwidth="0" marginheight="0" onLoad="goforit();">
+    <div class="app-bar fixed-top darcula" data-role="appbar">
+        <a class="app-bar-element branding">SISTEMA DE ADMINISTRACION</a>
+        <span class="app-bar-divider"></span>
+        <ul class="app-bar-menu">
+            <li><a href="principal_target.php" target="mainFrame">Principal</a></li>
+            <li>
+                <a href="" class="dropdown-toggle">Ayuda</a>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a href="">Sistema de Administracion</a></li>
+                    <li class="divider"></li>
+                    <li><a href="">About</a></li>
+                </ul>
+            </li>
+        </ul>
+<?php
+require_once("manejomysql.php");
+conectar_bd();
 
-<div id="Layer1" style="position:absolute; left:33px; top:1px; width:171px; height:98px; z-index:1"></div>
-<div id="Layer2" align="center"></div>
-<SCRIPT language=JavaScript src="hora.js"></SCRIPT>
+$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
+$querydatos = sacar_registro_bd($queryuser);
+$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']) or die("no se realizo");
+$querydatosuser = sacar_registro_bd($consultauser);
 
-
-<table border="0" cellpadding="0" cellspacing="0"   width="100%">
- <tbody>
- <tr>     
-      <td  width="23%" height="20" >&nbsp;</td>
-	  <td  width="23%" height="20" >&nbsp;</td>
-	  <td  width="30%" height="20">&nbsp;</td>
-	  <td  width="24%" height="20" background="men.gif" align="center"><SPAN 
-            id=clock></SPAN></td>
-  </tr>
-  <tr>     
-  <td   colspan="4" height="19" background="3c.gif">&nbsp;</td>
-  </tr>
-  </tbody>
-</table>
-
+?>
+        <div class="app-bar-element place-right">
+            <span class="dropdown-toggle"><span class="mif-users icon"></span> <?php echo $querydatosuser['nombre']." ".$querydatosuser['apellidoP']." ".$querydatosuser['apellidoM']; ?></span>
+            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+              <ul class="unstyled-list fg-dark">
+                    <li><a href="" class="fg-white3 fg-hover-yellow">Salir</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
