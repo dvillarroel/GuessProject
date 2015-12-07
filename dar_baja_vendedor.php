@@ -1,3 +1,21 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link href="jquery-ui.css" rel="stylesheet">
+	<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+
+
 <?php
 
 require_once("manejomysql.php");
@@ -10,7 +28,6 @@ if (mysql_num_rows($usuario_consulta) != 0)
 
 echo'<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body background="body2.jpg">
 <script language="JavaScript" type="text/JavaScript">
 function uno(src,color_entrada) {
 		//src.bgColor=color_entrada;src.style.cursor="hand";
@@ -19,9 +36,8 @@ function dos(src,color_default) {
 		//src.bgColor=color_default;src.style.cursor="default";
 }
 </script>
-MODIFICAR ESTADO DE LOS VENDEDORES:
-
-<br>
+<h1 class="text-light">Modificar Estado De Los Vendedores<span class="mif-users place-right"></span></h1>
+<hr class="thin bg-grayLighter">
 <br>
 ';
 
@@ -74,3 +90,5 @@ else
 
 
 ?>
+
+</html>

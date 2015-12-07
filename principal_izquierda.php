@@ -57,13 +57,26 @@
         })
     </script>
 </head>
+<?php 
+require_once("manejomysql.php");
+conectar_bd();
+
+$usuario_consulta = mysql_query("select cod_user from session" );
+$registro= sacar_registro_bd($usuario_consulta);
+
+?>
 <body class="bg-steel">
  
     <div class="page-content2">
             <div class="row" style="height: 100%">
                 <div class="cell size-x200" id="cell-sidebar" style="background-color: #71b1d1; height: 100%">
                     <ul class="sidebar2">
-                        <li><a href="administrar_cuentas.php" target="mainFrame">
+						<?php 
+                        
+						if($registro['cod_user'] == 1)
+						{
+							echo '
+						<li><a href="administrar_cuentas.php" target="mainFrame">
                             <span class="mif-users icon"></span>
                             <span class="title">Cuentas</span>
                         </a></li>
@@ -75,10 +88,10 @@
                             <span class="mif-apps icon"></span>
                             <span class="title">Productos</span>
                         </a></li>
-                        <li><a href="administrar_pedidos.php" target="mainFrame">
+						<li><a href="administrar_pedidos.php" target="mainFrame">
                             <span class="mif-calculator icon"></span>
                             <span class="title">Pedidos</span>
-							</a></li>
+							</a></li>	
                         <li><a href="buscar_cliente.php" target="mainFrame">
                             <span class="mif-search icon"></span>
                             <span class="title">Buscar</span>
@@ -90,7 +103,27 @@
                         <li><a href="salir.php" target="_parent">
                             <span class="mif-apps icon"></span>
                             <span class="title">Salir</span>
-                        </a></li>
+                        </a></li>';
+							
+						}
+						else
+						{
+							echo '
+							<li><a href="administrar_pedidos.php" target="mainFrame">
+                            <span class="mif-calculator icon"></span>
+                            <span class="title">Pedidos</span>
+							</a></li>
+							<li><a href="buscar_cliente.php" target="mainFrame">
+                            <span class="mif-search icon"></span>
+                            <span class="title">Buscar</span>
+							</a></li>
+							<li><a href="salir.php" target="_parent">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Salir</span>
+							</a></li>
+							';
+						}
+						?>
                     </ul>
                 </div>
         </div>

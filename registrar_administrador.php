@@ -1,16 +1,64 @@
-<?php 
-  // No almacenar en el cache del navegador esta página.
-		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");             		// Expira en fecha pasada
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");		// Siempre página modificada
-		header("Cache-Control: no-cache, must-revalidate");           		// HTTP/1.1
-		header("Pragma: no-cache");                                   		// HTTP/1.0
-
-
-?> 
-
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
 
-<body background="body2.jpg">
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+
+
  <script>
 	console.log("function javascript");
 
@@ -119,20 +167,17 @@
 </script>
  
  <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
- <SCRIPT language="javascript">
 
-</SCRIPT>
+ <body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+ 
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Registrar Administrador<span class="mif-users place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
 
-<br>
-<table width="40%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td class="panel-titulo2"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-    <td class="panel-titulo3" align="center">&nbsp;</td>
-	<td class="panel-titulo3" width="100%" align="center"><font class="titulo_formulario">FORMULARIO 
-    DE REGISTRO DE NUEVO ADMINISTRADOR</font></td>
-    <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-  </tr>
-</table>
+
 <form action="registrar_administrador2.php" method="post" name="ventas" onSubmit="return validarFormulario();">
 
 <table width="80%" align="center" cellpadding="0" cellspacing="0">
@@ -148,7 +193,7 @@
 <table width="100%" align="center" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
-      <td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
+      
 <td>
 
 <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
@@ -230,7 +275,7 @@
 <table width="100%" align="center" cellpadding="0" cellspacing="0">
   <tbody>
 <tr>
-<td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
+
 <td>
 
 <center>
@@ -249,12 +294,6 @@
         <td >&nbsp;</td>
 </tr></tbody>
 </table>
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-<tbody><tr>
-<td class="border-bleft" width="18"></td>
-<td class="border-bmain"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"></td>
-<td class="border-bright"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
-</tbody></table>
 
   <br>
 
@@ -266,40 +305,10 @@
     </tr>
   </table>
   
+				</div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>
   
-  <?php 
-  if( !empty($_GET['error_registro']) )
-{
-	$respuesta=null;
-	if($_GET['error_registro'] == 1)
-	{
-		$respuesta='TIENE QUE LLENAR TODOS LOS CAMPOS QUE SON NECESARIOS';
-	}
-		
-	echo '<br><br><table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">'.$respuesta.'</font></td>
-  		</tr>
-	</table>';
-
-
-}
-
-					
-
-  
-  
-  ?>
-  
- 
-<p>
-  <script language="JavaScript">
-			var cal1 = new calendar1(document.forms['ventas'].elements['correo_electronico']);
-			cal1.year_scroll = true;
-			cal1.time_comp = false;
-			
-			
-		//-->
-		</script>
-</p>
-<p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>

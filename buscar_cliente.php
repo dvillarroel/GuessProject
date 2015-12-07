@@ -1,8 +1,65 @@
 <html>
 <head>
-<title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link href="jquery-ui.css" rel="stylesheet">
+	<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
 	<style>
 	body{
 		font: 62.5% "Trebuchet MS", sans-serif;
@@ -50,61 +107,66 @@
 
 </head>
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-<body background="body2.jpg">
-<p>&nbsp;</p>
 
-<form method="post" action="buscar_cliente2a.php">
-  <br>
-   <div align="center"><font color="#330000" size="4" class="titl">BUSCAR PRODUCTO</font><br>
-   
-  </div>
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+ 
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Buscar Clientes o Productos<span class="mif-search place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
+					<form method="post" action="buscar_cliente2a.php">
+						<table width="35%" border="1" align="center">
+						  <tr> 
+							<td height="34" colspan="2"><div align="center">BUSCAR PRODUCTO</div></td>
+						  </tr>
+						  <tr> 
+							<td height="44"><select id="select1" name="menu1" class="Seleccion" OnChange="updateAutocomplete()">
+								<option>Codigo de producto</option>
+								<option selected>Nombre de Producto</option>
+								<option>Marca</option>
+								<option>Industria</option>
+								<option>Observaciones</option>
+							  </select></td>
+							<td><input id="autocomplete" type="text" name="buscar" class="Formulario" title="Ingrese el criterio de busqueda">
+							</td>
+						  </tr>
+						  <tr> 
+							<td colspan="2"><div align="center">
+								<input name="image"  type="image" onMouseOver= src="images/bu1.gif" onMouseMove= src="images/bu1.gif" onMouseOut=src="images/bu2.gif" value="" SRC="images/bu2.gif" align="middle">
+							  </div></td>
+						  </tr>
+						</table>
+						</form>
+						<form method="post" action="buscar_cliente2aaa.php">
+						<table width="35%" border="1" align="center">
+						  <tr>
+							<td height="34" colspan="2"><div align="center">BUSCAR CLIENTE</div></td>
+						  </tr>
+						  <tr>
+							<td height="44"><select id="select2" name="menu2" class="Seleccion" OnChange="updateAutocomplete2()">
+								<option>CI o NIT</option>
+								<option>Nombre del cliente</option>
+								<option selected>Apellido del Cliente</option>
+							</select></td>
+							<td><input id="autocomplete2" type="text" name="buscar2" class="Formulario"></td>
+						  </tr>
+						  <tr>
+							<td colspan="2"><div align="center">
+							  <input name="image2"  type="image" onMouseOver= src="images/bu1.gif" onMouseMove= src="images/bu1.gif" onMouseOut=src="images/bu2.gif" value="" SRC="images/bu2.gif" align="middle">
+							</div></td>
+						  </tr>
+						</table>
+						</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-<table width="35%" border="1" align="center">
-  <tr> 
-    <td height="34" colspan="2"><div align="center">BUSCAR PRODUCTO</div></td>
-  </tr>
-  <tr> 
-    <td height="44"><select id="select1" name="menu1" class="Seleccion" OnChange="updateAutocomplete()">
-        <option>Codigo de producto</option>
-        <option selected>Nombre de Producto</option>
-		<option>Marca</option>
-		<option>Industria</option>
-        <option>Observaciones</option>
-      </select></td>
-    <td><input id="autocomplete" type="text" name="buscar" class="Formulario" title="Ingrese el criterio de busqueda">
-	</td>
-  </tr>
-  <tr> 
-    <td colspan="2"><div align="center">
-        <input name="image"  type="image" onMouseOver= src="images/bu1.gif" onMouseMove= src="images/bu1.gif" onMouseOut=src="images/bu2.gif" value="" SRC="images/bu2.gif" align="middle">
-      </div></td>
-  </tr>
-</table>
-</form>
-<form method="post" action="buscar_cliente2aaa.php">
-<table width="35%" border="1" align="center">
-  <tr>
-    <td height="34" colspan="2"><div align="center">BUSCAR CLIENTE</div></td>
-  </tr>
-  <tr>
-    <td height="44"><select id="select2" name="menu2" class="Seleccion" OnChange="updateAutocomplete2()">
-        <option>CI o NIT</option>
-	    <option>Nombre del cliente</option>
-		<option selected>Apellido del Cliente</option>
-    </select></td>
-    <td><input id="autocomplete2" type="text" name="buscar2" class="Formulario"></td>
-  </tr>
-  <tr>
-    <td colspan="2"><div align="center">
-      <input name="image2"  type="image" onMouseOver= src="images/bu1.gif" onMouseMove= src="images/bu1.gif" onMouseOut=src="images/bu2.gif" value="" SRC="images/bu2.gif" align="middle">
-    </div></td>
-  </tr>
-</table>
-</form>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
 
 <script src="mysqlwslib.js"></script>
 <script src="external/jquery/jquery.js"></script>
@@ -234,8 +296,5 @@ $( "#autocomplete2" ).autocomplete({
 
 }
 ?>
-<p>&nbsp;</p><p>&nbsp;</p>
-<p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
-<p>&nbsp;</p>
 </body>
 </html>
