@@ -4,19 +4,16 @@ require_once("manejomysql.php");
 conectar_bd();
 
 //echo "SELECT cod_pedido, codigo_cliente, fecha, monto_total, estado FROM pedido WHERE estado='Ejecutado' and fecha='2012-01-01'";
-$usuario_consulta = mysql_query("SELECT cod_pedido, codigo_cliente,  fecha, monto_total, estado FROM pedido WHERE estado='Ejecutado' and fecha>='2012-01-01';" );	
+$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado'" );
 	
 if (mysql_num_rows($usuario_consulta) != 0)
 {
 
 	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body background="body2.jpg"><br>
+<br>
 		  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-    		<tr> 
-    			<td colspan="8" class="title"><div align="center">LISTA DE PEDIDOS REGISTRADOS</div></td>
-  				</tr>
-  				<tr > 
+    			<tr > 
 			    <td class="title">Codigo Pedido</td>
 			    <td class="title">Nombre Cliente</td>
 					<td class="title">Direccion</td>
@@ -34,11 +31,11 @@ if (mysql_num_rows($usuario_consulta) != 0)
 					echo '<tr>'; 
 					$a=sacar_registro_bd($usuario_consulta);
 					
-					$cod_pedido=$a['cod_pedido'];
+					$cod_pedido=$a['id_venta'];
 					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['monto_total'];
-					$fecha=$a['fecha'];
-					$estado=$a['estado'];
+					$monto=$a['total'];
+					$fecha=$a['fecha_venta'];
+					$estado=$a['estado_venta'];
 					
 					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
 					$a2=sacar_registro_bd($usuario_consulta2);
