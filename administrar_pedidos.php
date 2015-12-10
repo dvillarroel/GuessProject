@@ -73,7 +73,7 @@
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Anticipo de Pedido</span>
                         </a></li><br>
-						<li><a href="listar_pedidos_entregados.php" target="mainFrame">
+						<li><a href="listarpedidosxentregar.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Listar Pedidos por Entregar</span>
                         </a></li>

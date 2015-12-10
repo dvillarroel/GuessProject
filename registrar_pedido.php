@@ -10,13 +10,29 @@ $monto_total2 = mysql_query("Select SUM(monto_parcial) as p from detalle_venta w
 $mont=sacar_registro_bd($monto_total2);
 $total=$mont['p'];
 if($total > 0)
-{ mysql_query("UPDATE venta SET TOTAL=$total, estado_venta='Ejecutado' WHERE ID_VENTA=$codigo_pedido");
+{ mysql_query("UPDATE venta SET TOTAL=$total WHERE ID_VENTA=$codigo_pedido");
 	if($codigo_pedido > 0)
 	{
 		mysql_query("UPDATE anticipo SET monto_pedido=$total, estado='Entregado' WHERE cod_saldo=$codigo_saldo");
+		
+		$resulto= consulta_bd("SELECT max(id_vv) as p FROM ventavendedor" );
+		$a=sacar_registro_bd($resulto);
+		$nc=$a['p']+1;
+		
+		$queryuser = mysql_query("SELECT cod_user FROM session");
+		$querydatos = sacar_registro_bd($queryuser);
+		$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']);
+		$querydatosuser = sacar_registro_bd($consultauser);
+		$cod_vendedor=$querydatos['cod_user'];
+		$name_vendedor=$querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
+		
+		mysql_query("insert into ventavendedor values($nc, $codigo_pedido,$cod_vendedor,'$name_vendedor');" );
+		
+		
+		
 	}
 echo '
-			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE</font><br>
+			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE, Para completar el pedido, proceder a la entrega y realizar el Correspondiente registro.</font><br>
    
   </div>';	
 }

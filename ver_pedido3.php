@@ -1,3 +1,121 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link href="jquery-ui.css" rel="stylesheet">
+	<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+	<style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	select {
+		width: 200px;
+	}
+	</style>
+
+
+</head>
+<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+ 
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Informacion Pedido Entregado<span class="mif-search place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
 <?php
 
 	$var=$_GET['id_cliente'];
@@ -31,37 +149,6 @@
 
 echo'
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-
-<body background="body2.jpg">
-
-
-<html>
-<head>
-<title>Untitled Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-</head>
-
-<body>
-<p>INFORMACION CLIENTE</p>
-
-
-
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr> 
-      <td height="31" ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td>
-      <td ></td>
-      <td ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td>
-    </tr>
-  </tbody>
-</table>
-
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-      <td ><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
-<td>
 
 <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
           <tr> 
@@ -101,36 +188,18 @@ echo'
 		  
         </table>
 
+    
 
-</td>
-      <td ><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="8" width="18"></td>
-</tr></tbody>
-</table>
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-<tbody><tr>
-<td width="18" height="18" ></td>
-<td ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"></td>
-<td ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
-</tbody>
-</table>
 
-<br>
- 
-<table width="80%" align="center" cellpadding="0" cellspacing="0" >
-<tbody><tr>
-<td ></td>
-<td ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"></td>
-<td ><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
-</tbody>';
-	//echo "SELECT cod_pedido, fecha, monto_total, estado_pedido FROM pedido WHERE codigo_cliente=$codigo_cliente and estado_pedido='no Ejecutado';";
+<br>';
 	
-	$usuario_consulta = mysql_query("SELECT cod_pedido, fecha, monto_total, estado FROM pedido WHERE cod_pedido=$cod_pedido;" );	
+	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;" );	
 
 		$a=sacar_registro_bd($usuario_consulta);
-		$codigo_pedido=$a["cod_pedido"];
-		$fecha_pedido=$a["fecha"];
-		$monto_total=$a["monto_total"];
-		$estado_pedido=$a["estado"];
+		$codigo_pedido=$a["id_venta"];
+		$fecha_pedido=$a["fecha_venta"];
+		$monto_total=$a["total"];
+		$estado_pedido=$a["estado_venta"];
 		
 		echo '
 		<table width="70%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -151,62 +220,61 @@ echo'
   </tr>
 </table>';
 
-
-	$usuario_consulta = mysql_query("SELECT cantidad, monto, precio_unitario, cod_dp, cod_producto, cod_equipo FROM detalle_pedido WHERE cod_pedido=".$cod_pedido);	
+	//echo "SELECT codigo_detalle, cod_usuario, codigo_producto, id_venta, codigo_cliente, cantidad, precio_unitario, monto_parcial FROM detalle_venta WHERE id_venta=".$codigo_pedido;
+	$usuario_consulta = mysql_query("SELECT codigo_detalle, cod_usuario, codigo_producto, id_venta, codigo_cliente, cantidad, precio_unitario, monto_parcial FROM detalle_venta WHERE id_venta=".$codigo_pedido);	
 			
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{	
 		
-				echo '<br>
-				<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+					echo '<br>
+				<table width="100%" border="0" align="center" cellpding="0" cellspacing="0">
   				<tr> 
-    			<td colspan="8" class="title"><div align="center">DETALLE DE PEDIDO</div></td>
+    			<td colspan="11" class="title"><div align="center">DETALLE DE PEDIDO</div></td>
   				</tr>
   				<tr > 
 			    <td class="title">Codigo Producto</td>
 			    <td class="title">Nombre Producto</td>
+				<td class="title">Marca</td>
+				<td class="title">Industria</td>
+				<td class="title">Observaciones</td>
 			    <td class="title">Cantidad </td>
 			    <td class="title">Precio Unitario</td>
+			    <td class="title">Precio Cliente</td>
 			    <td class="title">Total</td>
-			    <td class="title">Codigo Equipo</td>
-			   
+			    <td class="title">Stock Restante</td>
+			    <td class="title">Imagen</td>
 				</tr>';
   			
 		  		for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 				{
-						//$registro= sacar_registro_bd($usuario_consulta2);
-						
-						
-						echo '<tr>'; 
-						 $a=sacar_registro_bd($usuario_consulta);
-					
-						$codigo_producto=$a['cod_producto'];
-						$codigo_dp=$a['cod_dp'];
-						$cantidad=$a['cantidad'];
-						$monto=$a['monto'];
-						$precio_unitario=$a['precio_unitario'];
-						$cod_equipo=$a['cod_equipo'];
+						//$registro= sacar_registro_bd($usuario_consulta);
 				
-						$usuario_consulta2 = mysql_query("SELECT nombre_producto FROM producto WHERE cod_producto=$codigo_producto;" );	
+						echo '<tr>'; 
+						$a=sacar_registro_bd($usuario_consulta);
+						$codigo_producto=$a['codigo_producto'];
+						$codigo_dp=$a['codigo_detalle'];
+						$cantid=$a['cantidad'];
+						$monto=$a['monto_parcial'];
+						$precio_unitario=$a['precio_unitario'];
+						//$cod_equipo=$a['cod_equipo'];
+						$usuario_consulta2 = mysql_query("SELECT nombre_producto, stock, precio_unitario_prod, marca, industria, imagen1, observaciones_producto FROM producto WHERE codigo_producto='$codigo_producto';" );	
 						$a=sacar_registro_bd($usuario_consulta2);
 						$nombre_producto=$a['nombre_producto'];
+						$imagen="Img_prod/".$a['imagen1'];
+						//echo $imagen;
 			
 						echo "
 						<td class='campotablas'>".$codigo_producto."</td>
 		    			<td class='campotablas'>".$nombre_producto."</td>
-		    			<td class='campotablas'>".$cantidad."</td>
+						<td class='campotablas'>".$a['marca']."</td>
+						<td class='campotablas'>".$a['industria']."</td>
+						<td class='campotablas'>".$a['observaciones_producto']."</td>
+		    			<td class='campotablas'>".$cantid."</td>
+						<td class='campotablas'>".$a['precio_unitario_prod']."</td>
 						<td class='campotablas'>".$precio_unitario."</td>
 						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>";
-						if(!empty($cod_equipo))
-						{
-								echo $cod_equipo;
-						}
-						else
-						{
-								echo"Sin equipo";
-						}
-						echo "</td>";
+						<td class='campotablas'>".$a['stock']."</td>
+						<td class='campotablas'><img src='".$imagen."' style='width:100px;height:100px;'></td>";
 						echo '</tr>';	
 					
 				}
@@ -214,6 +282,20 @@ echo'
   
   				echo '
 				</table>';
+				
+				//recover vendedor
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$aV=sacar_registro_bd($usuario_consultaV);
+					$nombre_vendedor=$aV['nombrevendedor'];
+				
+				echo '<br><table>
+		<tr> <td>Vendedor:</td>
+		<td>'.$nombre_vendedor.'</td>
+		
+		</tr>
+		</table>
+		';
+				
 		}
 	
 		echo '<br><table width="60%" border="0" align="center" >
@@ -229,3 +311,10 @@ echo'
  
   
 ?>  
+
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>
