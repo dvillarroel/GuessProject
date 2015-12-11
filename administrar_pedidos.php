@@ -72,7 +72,23 @@
 						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Anticipo de Pedido</span>
-                        </a></li><br>
+                        </a></li>
+						<br>
+						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Modificar o Cancelar Registro de Anticipo de Pedido</span>
+                        </a></li>
+						<br>
+						<li><a href="listarpedidosxentregar.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Registrar Entrega de Pedido</span>
+                        </a></li>
+						<br>
+						<li><a href="listarpedidosxentregar.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Cancelar Pedido Registrado</span>
+                        </a></li>
+						<br>
 						<li><a href="listarpedidosxentregar.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Listar Pedidos por Entregar</span>
