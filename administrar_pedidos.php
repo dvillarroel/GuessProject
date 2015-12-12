@@ -74,7 +74,7 @@
                             <span class="title">Registrar Anticipo de Pedido</span>
                         </a></li>
 						<br>
-						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+						<li><a href="modificar_anticipo.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Modificar o Cancelar Registro de Anticipo de Pedido</span>
                         </a></li>
