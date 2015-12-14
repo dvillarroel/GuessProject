@@ -1,6 +1,6 @@
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body background="body2.jpg">
+
  
  <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
  <SCRIPT language="javascript">
@@ -22,6 +22,7 @@
 
 	$tipo=$_GET['menu1'];
 	$var=$_GET['buscar'];
+	//echo $var;
 	require_once("manejomysql.php");
 	conectar_bd();
 	
@@ -58,7 +59,7 @@ echo'
 
 <body>
 
-   <div align="center"><font color="#330000" size="4" class="titl">INFORMACION SOLICITUD</font><br>
+   <div align="center"><font color="#330000" size="4" class="titl">ELIMINAR ANTICIPO</font><br>
    
   </div>
 
@@ -131,45 +132,27 @@ echo'
 		$observaciones=$a["observaciones"];
 		
 		echo '
-		<table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
-		<tr> 
-    <td colspan="4" class="title">EL CLIENTE YA TIENE UN SALDO DE ANTICIPO</td>
-  </tr>
-  <tr> 
-    <td class="campotablas">Monto registrado para pedido:</td>
-    <td class="campotablas">'.$monto_favor.'</td>
-    <td class="campotablas">Fecha que se realizo la solicitud:</td>
-	<td class="campotablas">'.$fecha_registro.'</td>
-  <tr> 
-    <td class="campotablas">Estado Solicitud:</td>
-    <td class="campotablas">'.$estado.'</td>
-    <td class="campotablas">Observaciones</td>
-	<td class="campotablas">'.$observaciones.'</td>
-  </tr>
-</table> <BR>';
-
-		echo '
-					<form action="registrar_solicitud2.php?id='.$codigo_cliente.'"  method="post" name="ventas" onSubmit="return validarFormulario(this);">
+					<form action="eliminar_anticipo2.php?id='.$codigo_cliente.'&cod_anticipo='.$codigo_saldo.'"  method="post" name="ventas" >
 
 		<table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
 		<tr> 
-    <td colspan="4" class="title">ACTUALIZAR ANTICIPO CLIENTE</td>
+    <td colspan="4" class="title">ELIMINAR ANTICIPO CLIENTE</td>
   </tr>
   <tr> 
     <td class="campotablas">Nuevo Monto:</td>
-    <td class="campotablas"><input type="text" name="monto" maxlength="15" tabindex="3" class="Formulario" value="'.$monto_favor.'"></td>
+    <td class="campotablas">'.$monto_favor.'</td>
     <td class="campotablas">Fecha de Actualizacion:</td>
 	<td class="campotablas">';
 		    $resultado7=consulta_bd("SELECT CURRENT_DATE as date" );
 	$registro7= sacar_registro_bd($resultado7);
 	$fecha=$registro7['date'];
 
-	echo '<input type="text" name="correo_electronico" id="correo_electronico" maxlength="20" tabindex="8" class="Formulario" value="'.$fecha.'" readonly /></td>
+	echo $fecha.'</td>
   <tr> 
     <td class="campotablas">Estado Solicitud:</td>
     <td class="campotablas">'.$estado.'</td>
     <td class="campotablas">Observaciones</td>
-	<td class="campotablas"><input type="text" name="observaciones" maxlength="250" tabindex="3" class="Formulario" value="'.$observaciones.'"></td>
+	<td class="campotablas">'.$observaciones.'</td>
   </tr>
 </table>';
 
@@ -179,7 +162,7 @@ echo'
 //echo $querydatosuser['nombre']." ".$querydatosuser['apellidoP']." ".$querydatosuser['apellidoM'];
 
 		echo '<br><table>
-		<tr> <td>Vendedor:</td>
+		<tr> <td>Vendedor que registro el anticipo:</td>
 		<td>'.$querydatos['nombre_vendedor'].'</td>
 		
 		</tr>
@@ -200,62 +183,7 @@ echo '<table width="30%" border="0" align="center" >
 	
 		
 	}
-	else
-	{
-	    $resultado7=consulta_bd("SELECT CURRENT_DATE as date" );
-	$registro7= sacar_registro_bd($resultado7);
-	$fecha=$registro7['date'];
-	
-			echo '
-			<form action="registrar_solicitud.php?id='.$codigo_cliente.'"  method="post" name="ventas" onSubmit="return validarFormulario(this);">
-		<table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
-		<tr> 
-    <td colspan="4" class="title">REGISTRAR SOLICITUD</td>
-  </tr>
-  <tr> 
-    <td class="campotablas">Monto registrado para pedido (Bs):</td>
-    <td class="campotablas"><input type="text" name="monto" maxlength="15" tabindex="3" class="Formulario" value="0"></td>
-    <td class="campotablas">Fecha que se realizo la solicitud:</td>
-	<td class="campotablas"><input type="text" name="correo_electronico" id="correo_electronico" maxlength="20" tabindex="8" class="Formulario" value="'.$fecha.'" readonly />
-	</td>
-  <tr> 
-    <td class="campotablas">Observaciones:</td>
-    <td class="campotablas"><input type="text" name="observaciones" maxlength="250" tabindex="3" class="Formulario" value="Productos: "></td>
-    <td class="campotablas"></td>
-	<td class="campotablas"></td>
-  </tr>
-</table>';
-
-			
-		$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
-$querydatos = sacar_registro_bd($queryuser);
-$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']) or die("no se realizo");
-$querydatosuser = sacar_registro_bd($consultauser);
-//echo $querydatosuser['nombre']." ".$querydatosuser['apellidoP']." ".$querydatosuser['apellidoM'];
-
-		echo '<br><table>
-		<tr> <td>Vendedor:</td>
-		<td>'.$querydatosuser['nombre']." ".$querydatosuser['apellidoP']." ".$querydatosuser['apellidoM'].'</td>
-		
-		</tr>
-		</table><br>
-		';
-
-
-		echo '<table width="30%" border="0" align="center" >
-    <tr>
-      <td align="center">
-	  <input name="image"  type="image" onMouseOver= src="images/r2.gif" onMouseMove= src="images/r2.gif" onMouseOut=src="images/r1.gif" value="" SRC="images/r1.gif"> </td>
-	  </form>
-	  
-      <form action="principal_target.php" method="post"><td align="center"><input name="cancelar"  type="image" onMouseOver= src="images/c2.gif" onMouseMove= src="images/c2.gif" onMouseOut=src="images/c1.gif" value="" SRC="images/c1.gif"> </td> </form>
-    </tr>
-  </table>';
-		
-		
-		
-		
-	}
+	?>
 	
 	
 	

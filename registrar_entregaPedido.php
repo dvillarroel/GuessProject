@@ -63,42 +63,52 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Administrar Pedidos<span class="mif-calculator place-right"></span></h1>
+                    <h1 class="text-light">Registro de Entrega de Pedido</h1>
                     <hr class="thin bg-grayLighter">
-					<li><a href="buscar_cliente_pedido.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Realizar Pedido</span>
-                        </a></li><br>
-						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Anticipo de Pedido</span>
-                        </a></li>
-						<br>
-						<li><a href="modificar_anticipo.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Modificar o Cancelar Registro de Anticipo de Pedido</span>
-                        </a></li>
-						<br>
-						<li><a href="registrar_entregaP.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Entrega de Pedido</span>
-                        </a></li>
-						<br>
-						<li><a href="cancelar_entregaP.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Cancelar Pedido Registrado</span>
-                        </a></li>
-						<br>
-						<li><a href="listarpedidosxentregar.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Listar Pedidos por Entregar</span>
-                        </a></li>
-						<br>
-						<li><a href="listar_pedidos_x_entregados.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Listar Pedidos Entregados</span>
-                        </a></li>
+
+<?php
+$codigo_pedido=$_GET['id_pedido'];
+
+require_once("manejomysql.php");
+conectar_bd();
+
+$monto_total2 = mysql_query("Select SUM(monto_parcial) as p from detalle_venta where id_venta=$codigo_pedido;");
+$mont=sacar_registro_bd($monto_total2);
+$total=$mont['p'];
+if($total > 0)
+{ //mysql_query("UPDATE venta SET TOTAL=$total WHERE ID_VENTA=$codigo_pedido");
+	if($codigo_pedido > 0)
+	{
+		
+		$queryuser = mysql_query("SELECT cod_user FROM session");
+		$querydatos = sacar_registro_bd($queryuser);
+		$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']);
+		$querydatosuser = sacar_registro_bd($consultauser);
+		$cod_vendedor=$querydatos['cod_user'];
+		$name_vendedor=$querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
+
+		$resulto7=consulta_bd("SELECT CURRENT_DATE as date" );
+		$registro7= sacar_registro_bd($resulto7);
+		$fecha=$registro7['date'];
+
+		mysql_query("update venta set estado_venta='Ejecutado', fecha_entrega='$fecha' where id_venta=$codigo_pedido" );
+		mysql_query("UPDATE ventavendedor SET id_userentrego=$cod_vendedor, nombreentrego='$name_vendedor' WHERE id_venta=$codigo_pedido");
+		
+		
+		
+	}
+echo '
+			<div align="center"><font color="#330000" size="4" class="titl">La entrega del Pedido se realizo correctamente.</font><br>
+   
+  </div>';	
+}
+
+
+?>
                     <hr class="thin bg-grayLighter">
+					<div>
+						<p align="center"><a href="Administrar_pedidos.php">Volver Administrar Pedidos</a></p>
+					</div>
 				</div>
             </div>
 		</div>

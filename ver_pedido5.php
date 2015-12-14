@@ -114,7 +114,7 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Informacion Pedido Entregado<span class="mif-search place-right"></span></h1>
+                    <h1 class="text-light">Registrar Entrega Pedido<span class="mif-search place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
 <?php
 
@@ -297,6 +297,18 @@ echo'
 		';
 				
 		}
+			echo '<br><table width="40%" border="0" align="center" >
+    <tr></form>
+      <td align="center"></td>
+       <td align="center">
+	    <form action="registrar_entregaPedido.php?id_pedido='.$codigo_pedido.'" method="post"><td align="center">            <div class="form-actions"><button type="submit" class="button primary">Registrar entrega</button></div> 
+		</td> </form>
+         <td align="center">
+	    <form action="administrar_pedidos.php" method="post"><td align="center"><button type="submit" class="button primary">Cancelar</button> 
+		</td> </form>
+    </tr>
+  </table>';
+	
 	
 		echo '<br><table width="60%" border="0" align="center" >
     <tr></form>

@@ -121,10 +121,12 @@
 								<td class="title">Codigo Pedido</td>
 								<td class="title">Nombre Cliente</td>
 								<td class="title">Monto Total</td>
-								<td class="title">Fecha </td>
+								<td class="title">Fecha Registro</td>
+								<td class="title">Fecha Entrega</td>
 								<td class="title">Estado </td>
 								<td class="title">Detalle_Pedido</td>
-								<td class="title">Vendedor</td>
+								<td class="title">Vendedor que Registro el Pedido</td>
+								<td class="title">Vendedor que Realizo la Entrega</td>
 							</tr>
 					
 
@@ -140,8 +142,8 @@
 	{
 		$today = date('Y-m-d');					  
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and fecha_venta='$today'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and fecha_venta='$today'");
-		
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'");
+		echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'";
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -153,6 +155,7 @@
 					$codigo_cliente=$a['codigo_cliente'];
 					$monto=$a['total'];
 					$fecha=$a['fecha_venta'];
+					
 					$estado=$a['estado_venta'];
 					
 					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
@@ -162,19 +165,22 @@
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
-							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
 									
 						
@@ -195,11 +201,11 @@
 		$end_week = strtotime("next sunday",$d);
 		$start = date("Y-m-d",$start_week); 
 		$end = date("Y-m-d",$end_week); 
-		echo $start;
-		echo $end;
+		echo "Periodo seleccionado entre: ".$start;
+		echo " al: ".$end;
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')");
-		
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start'");
+//			echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and fecha_venta>='$start'";
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -213,26 +219,30 @@
 					$fecha=$a['fecha_venta'];
 					$estado=$a['estado_venta'];
 					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
+					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;");	
 					$a2=sacar_registro_bd($usuario_consulta2);
 					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
 					$direccion=$a2['direccion_cliente'];
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
 							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
 									
 						
@@ -254,11 +264,11 @@
 		$end_week = strtotime("last day of this month",$d);
 		$start = date("Y-m-d",$start_week); 
 		$end = date("Y-m-d",$end_week); 
-		echo $start;
-		echo $end;
+		echo "Periodo seleccionado entre: ".$start;
+		echo " al: ".$end;
 						
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')");
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE fecha_entrega='Ejecutado' and fecha_entrega>='$start'");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
@@ -280,19 +290,23 @@
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
 							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
 									
 						
@@ -312,12 +326,13 @@
 		$end_week = strtotime("last day of previous month",$d);
 		$start = date("Y-m-d",$start_week); 
 		$end = date("Y-m-d",$end_week); 
-		echo $start;
-		echo $end;
+		echo "Periodo seleccionado entre: ".$start;
+		echo " al: ".$end;
 						
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')");
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'");
 		
+	
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -338,19 +353,23 @@
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
 							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
 									
 						
@@ -367,11 +386,11 @@
 	{
 		$start=$_POST['fecha_inicio'];
 		$end=$_POST['fecha_fin'];
-		echo $start;
-		echo $end;
+		echo "Periodo seleccionado entre: ".$start;
+		echo " al: ".$end;
 						
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')");
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
@@ -393,20 +412,25 @@
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
 							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
+
 									
 						
 					echo '</tr>';
@@ -423,7 +447,7 @@
 	{
 				
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado'");
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado'");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
@@ -437,6 +461,7 @@
 					$monto=$a['total'];
 					$fecha=$a['fecha_venta'];
 					$estado=$a['estado_venta'];
+					//echo "SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;";
 					
 					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
 					$a2=sacar_registro_bd($usuario_consulta2);
@@ -445,19 +470,22 @@
 					$observaciones=$a2['observaciones_cliente'];
 					
 					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
+					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
 					$aV=sacar_registro_bd($usuario_consultaV);
 					$nombre_vendedor=$aV['nombrevendedor'];
+					$nombre_entrego=$aV['nombreentrego'];
 							
-							
+					$fecha_entrega=$a['fecha_entrega'];		
 					echo "
 						<td class='campotablas'>".$cod_pedido."</td>
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
+						<td class='campotablas'>".$fecha_entrega."</td>
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'>".$nombre_entrego."</td>
 						";
 									
 						

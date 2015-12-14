@@ -13,9 +13,21 @@
 	$cod_saldo=$registro7['sal'];
 	
 	$consulta="UPDATE anticipo SET monto_favor=$monto, fecha_registro='$fecha',observaciones='$observaciones' WHERE cod_saldo=$cod_saldo and codigo_cliente=$codigo_cliente";
-	echo $consulta;
+//	echo $consulta;
+	
 	mysql_query($consulta) or die(header ("Location:buscar_cliente_solicitud.php?error_registro=2"));
 
+	$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
+	$querydatos = sacar_registro_bd($queryuser);
+	$cod_vendedor=$querydatos['cod_user'];
+	$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']) or die("no se realizo");
+	$querydatosuser = sacar_registro_bd($consultauser);
+	$name = $querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
+	
+	//echo "update anticipouser set cod_user = $cod_vendedor, nombre_vendedor='$name' where id_anticipo=$cod_saldo";
+	mysql_query("update anticipouser set cod_user = $cod_vendedor, nombre_vendedor='$name' where id_anticipo=$cod_saldo");
+	
+	
 	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
 	<body background="body2.jpg">';

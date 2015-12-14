@@ -114,7 +114,7 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Lista de Pedidos por Entregar:<span class="mif-search place-right"></span></h1>
+                    <h1 class="text-light">Cancelar Pedido:<span class="mif-search place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
 						<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
 							<tr>
@@ -124,8 +124,9 @@
 								<td class="title">Fecha </td>
 								<td class="title">Estado </td>
 								<td class="title">Detalle Pedido</td>
-								<td class="title">Registrado Por</td>
-					
+								<td class="title">Registrado por</td>
+								<td class="title">Cancelar Pedido</td>
+								
 							</tr>
 					
 
@@ -172,6 +173,7 @@
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'><a href=ver_pedido6.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Cancelar</a></td>
 						";
 									
 						

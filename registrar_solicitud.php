@@ -16,6 +16,20 @@
 	//echo $consulta;
 	mysql_query($consulta) or die(header ("Location:buscar_cliente_solicitud.php?error_registro=2"));
 
+	$resultado8=consulta_bd("SELECT id from anticipouser");
+	$registro8= sacar_registro_bd($resultado8);
+	$id_anticipo_user=$registro8['id']+1;
+	
+	$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
+	$querydatos = sacar_registro_bd($queryuser);
+	$cod_vendedor=$querydatos['cod_user'];
+	$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']) or die("no se realizo");
+	$querydatosuser = sacar_registro_bd($consultauser);
+	$name = $querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
+		
+	$consulta="insert into anticipouser values($id_anticipo_user, $cod_vendedor, '$name',$cod_saldo)";
+	mysql_query($consulta);
+	
 	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
 	<body background="body2.jpg">';

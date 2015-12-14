@@ -234,7 +234,7 @@ $querydatos2 = sacar_registro_bd($queryuser2);
 		$monto_total=0;
 		$observaciones_pedido='Ninguno';
 		
-		$usuario_consulta = mysql_query("insert into venta values($nc, 0,0,'$fecha','No Ejecuto', $codigo_cliente);" );	
+		$usuario_consulta = mysql_query("insert into venta values($nc, 0,0,'$fecha','No Ejecuto', $codigo_cliente,null);" );	
 	
 		$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, total_descuento, estado_venta FROM venta WHERE codigo_cliente=$codigo_cliente and estado_venta='No Ejecuto' and total=0;");	
 		

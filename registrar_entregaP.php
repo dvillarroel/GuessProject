@@ -124,8 +124,9 @@
 								<td class="title">Fecha </td>
 								<td class="title">Estado </td>
 								<td class="title">Detalle Pedido</td>
-								<td class="title">Registrado Por</td>
-					
+								<td class="title">Registrado por</td>
+								<td class="title">Registrar Entrega</td>
+								
 							</tr>
 					
 
@@ -172,6 +173,7 @@
 						<td class='campotablas'>".$estado."</td>
 		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
+						<td class='campotablas'><a href=ver_pedido5.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Registrar Entrega</a></td>
 						";
 									
 						

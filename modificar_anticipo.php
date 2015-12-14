@@ -165,9 +165,9 @@ function dos(src,color_default) {
     			<td class='campotablas'>".$registro2['nombre_cliente']." " .$registro2['apellido_paterno']." " .$registro2['apellido_materno']."</td>
     			<td class='campotablas'>".$registro['monto_favor']."</td>
    				<td class='campotablas'>".$registro['estado']."</td>
-    			<td class='campotablas'><a href=modificar_vendedor2.php?id=".$registro['cod_saldo']."&estado=".$registro['codigo_cliente']." >Ver Detalle</a></td>
-    			<td class='campotablas'><a href=modificar_vendedor2.php?id=".$registro['cod_saldo']." >Modificar</a></td>
-    			<td class='campotablas'><a href=modificar_vendedor2.php?id=".$registro['cod_saldo']."  >Eliminar</a></td>";
+    			<td class='campotablas'><a href=ver_anticipo.php?id=".$registro['cod_saldo']."&cliente=".$registro['codigo_cliente']." >Ver Detalle</a></td>
+    			<td class='campotablas'><a href=modificar_anticipo2.php?menu1=".$registro['cod_saldo']."&buscar=".$registro['codigo_cliente']." >Modificar</a></td>
+    			<td class='campotablas'><a href=eliminar_anticipo.php?menu1=".$registro['cod_saldo']."&buscar=".$registro['codigo_cliente']."  >Eliminar</a></td>";
 	
 			
 		echo "</tr>";
@@ -181,11 +181,15 @@ function dos(src,color_default) {
 }
 else
 {
-
+		echo '<h3 class="text-light">No existen anticipos registrados</h3>';
+                   
 }
 
 
 ?>
+		<hr class="thin bg-grayLighter">
+		<p align="center"><a href="administrar_pedidos.php">VOLVER ATRAS</a></p>
+
 
 				</div>
 			</div>
