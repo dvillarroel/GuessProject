@@ -103,6 +103,25 @@ echo '
 			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE, Para completar el pedido, proceder a la entrega y realizar el Correspondiente registro.</font><br>
    
   </div>';	
+  	$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_dp");
+  				if (mysql_num_rows($querypagos) != 0)
+				{	
+					//$querydatos = sacar_registro_bd($querypagos);
+				}
+				else
+				{
+						echo '<br><table>
+						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
+						<td><font color="red">'.$total.'</font></td>
+						</tr>
+						<tr> <td><a href=registrar_pago.php?id_pedido='.$codigo_pedido.'&id_cliente='.$codigo_cliente.'>Registrar Pago Pedido</a> </td>
+						
+						</tr>
+						</table>
+							';
+					
+				}
+  
 }
 else
 {

@@ -234,7 +234,7 @@ $querydatos2 = sacar_registro_bd($queryuser2);
 		$monto_total=0;
 		$observaciones_pedido='Ninguno';
 		
-		$usuario_consulta = mysql_query("insert into venta values($nc, 0,0,'$fecha','No Ejecuto', $codigo_cliente,null);" );	
+		$usuario_consulta = mysql_query("insert into venta values($nc, 0,0,'$fecha','No Ejecuto', $codigo_cliente,null, null, null, null);" );	
 	
 		$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, total_descuento, estado_venta FROM venta WHERE codigo_cliente=$codigo_cliente and estado_venta='No Ejecuto' and total=0;");	
 		
@@ -412,7 +412,30 @@ $querydatosuser = sacar_registro_bd($consultauser);
 
 				';
 		}
-	
+		
+		
+				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_dp");
+				
+							
+				if (mysql_num_rows($querypagos) != 0)
+				{	
+					//$querydatos = sacar_registro_bd($querypagos);
+				}
+				else
+				{
+						echo '<br><table>
+						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
+						<td><font color="red">'.$mont['p'].'</font></td>
+						</tr>
+						<tr> <td><font color="red">Nota: si el cliente tiene registrado un anticipo, este sera registrado como Pago.</font> </td>
+						
+						</tr>
+						</table>
+							';
+					
+				}
+				
+
 		
 		$queryuser = mysql_query("SELECT cod_user FROM session") or die("no se realizo");
 $querydatos = sacar_registro_bd($queryuser);
