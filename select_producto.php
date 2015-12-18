@@ -89,7 +89,7 @@
 </form>
 <p>&nbsp;</p>
 <p align="center">
-<?php echo "<a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$cliente.">VOLVER ATRAS</a></p>"; ?>
+<?php echo "<a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$cliente." >VOLVER ATRAS</a></p>"; ?>
 <p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
 <p>&nbsp;</p>
 

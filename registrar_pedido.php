@@ -4,6 +4,7 @@
     <link href="docs/css/metro.css" rel="stylesheet">
     <link href="docs/css/metro-icons.css" rel="stylesheet">
     <link href="docs/css/metro-responsive.css" rel="stylesheet">
+	<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
     <script src="docs/js/jquery-2.1.3.min.js"></script>
     <script src="docs/js/jquery.dataTables.min.js"></script>
@@ -94,19 +95,95 @@ if($total > 0)
 		$cod_vendedor=$querydatos['cod_user'];
 		$name_vendedor=$querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
 		
+		$anticipoQuery=mysql_query("select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo");
+		
+		echo "select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo";
+		
+		$montopago=0;
+		if (mysql_num_rows($anticipoQuery) != 0)
+		{ 
+			$registroanticipo = sacar_registro_bd($anticipoQuery);
+			$montoanticipo=$registroanticipo['monto_favor'];
+			$montopago=$total-$registroanticipo['monto_favor'];
+			if($montopago >= 0 )
+			{
+				echo '<div align="center"><font color="blue" size="4" class="titl">El cliente tiene un anticipo que se registrara en el pago del Pedido.</font><br></div>';
+  
+				$queryfecha=consulta_bd("SELECT CURRENT_DATE as date" );
+				$registroFecha= sacar_registro_bd($queryfecha);
+				$fechaReg=$registroFecha['date'];
+				$pagoid= consulta_bd("SELECT max(id_vv) as p FROM ventavendedor" );
+				$pagoA=sacar_registro_bd($pagoid);
+				$codPago=$pagoA['p']+1;
+				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$montoanticipo,'No Cancelado', $montopago, $cod_vendedor,'$name_vendedor' );" );
+				
+			}
+			else
+			{
+				echo '<div align="center"><font color="blue" size="4" class="titl">El cliente tiene un anticipo que se registrara en el pago del Pedido.</font><br></div>';
+				$queryfecha=consulta_bd("SELECT CURRENT_DATE as date" );
+				$registroFecha= sacar_registro_bd($queryfecha);
+				$fechaReg=$registroFecha['date'];
+				$pagoid= consulta_bd("SELECT max(id_vv) as p FROM ventavendedor" );
+				$pagoA=sacar_registro_bd($pagoid);
+				$codPago=$pagoA['p']+1;
+				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$total,'Cancelado', 0, $cod_vendedor,'$name_vendedor');" );
+
+				echo '<div align="center"><font color="blue" size="4" class="titl">Debido a que el anticipo es mayor al monto del pedido, se debe devolver cambio: <font color="red">'.$montopago.'Bs.</font> o registrar un nuevo anticipo por la cantidad especificada </font><br></div>';
+				
+				echo "<br><br>"; 
+				
+			}
+			
+		}
+		else
+		{
+			
+			
+		}
+				
 		mysql_query("insert into ventavendedor values($nc, $codigo_pedido,$cod_vendedor,'$name_vendedor',null,null);" );
 		
 		
 		
+		
+		
+		
+		
+		
+		
 	}
-echo '
-			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE, Para completar el pedido, proceder a la entrega y realizar el Correspondiente registro.</font><br>
-   
-  </div>';	
-  	$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_dp");
+	
+				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido");
   				if (mysql_num_rows($querypagos) != 0)
 				{	
-					//$querydatos = sacar_registro_bd($querypagos);
+					$queryPagos2 = mysql_query("SELECT id, fechapago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$codigo_pedido;" );	
+					//echo "SELECT id, fechapago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$codigo_pedido;";
+
+					if (mysql_num_rows($queryPagos2) != 0)
+					{
+						  echo '<table width="70%" border="1" align="center" cellpding="0" cellspacing="0">
+								<tr> 
+								<td class="title">Codigo Pago</td>
+								<td class="title">Monto Pagado</td>
+								<td class="title">Fecha que se realizo Pago</td>
+								<td class="title">Saldo</td>
+								<td class="title">Vendedor que registro el Pago</td><tr>';
+							for ( $i=0; $i< cuantos_registros_bd($queryPagos2); $i++)
+							{
+								$datos=sacar_registro_bd($queryPagos2);
+								
+								echo "<tr><td class='campotablas'>".$datos['id']."</td>
+									<td class='campotablas'>".$datos['monto_pago']."</td>
+									<td class='campotablas'>".$datos['fechapago']."</td>
+									<td class='campotablas'>".$datos['saldo']."</td>
+									<td class='campotablas'>".$datos['vendedor']."</td><tr>";
+								
+							}
+							echo '</table><br>';
+						
+						
+					}
 				}
 				else
 				{
@@ -121,6 +198,12 @@ echo '
 							';
 					
 				}
+				
+				echo '<br><br>
+			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE, Para completar el pedido, proceder a la entrega y realizar el Correspondiente registro.</font><br>
+   
+  </div>';
+				
   
 }
 else

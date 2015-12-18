@@ -414,7 +414,7 @@ $querydatosuser = sacar_registro_bd($consultauser);
 		}
 		
 		
-				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_dp");
+				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido");
 				
 							
 				if (mysql_num_rows($querypagos) != 0)
@@ -484,26 +484,7 @@ echo '<br><table width="40%" border="0" align="center" >
  
 ?>  
 
-<?php 
- if( !empty($_GET['error_de_pedido']) )
-{
-	$respuesta=null;
-	if($_GET['error_de_pedido'] == 1)
-	{
-		$respuesta='EL REGISTRO NO SE REALIZO POR QUE NO TIENE NINGUN PRODUCTO ICIONO AL PEDIDO';
-	}
-		
-	echo '<br><br><table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">'.$respuesta.'</font></td>
-  		</tr>
-	</table>';
-
-
-}
- ?> 
-
-  
+ 
 <p>&nbsp;</p>
 
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">

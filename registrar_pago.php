@@ -166,7 +166,49 @@
 					</td>
 				</table><br>';
 				
-
+	$queryPagos = mysql_query("SELECT id, fechapago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$cod_pedido;" );	
+	//echo "SELECT id, fecha_pago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$cod_pedido;" ;
+		//echo "SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;";
+		if (mysql_num_rows($queryPagos) != 0)
+		{
+			  echo '<table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
+					<tr> 
+					<td class="title">Codigo Pago</td>
+					<td class="title">Monto Pagado</td>
+					<td class="title">Fecha que se realizo Pago</td>
+					<td class="title">Saldo</td>
+					<td class="title">Vendedor que registro el Pago</td>';
+				for ( $i=0; $i< cuantos_registros_bd($queryPagos); $i++)
+				{
+					$datos=sacar_registro_bd($queryPagos);
+					
+					echo "<td class='campotablas'>".$datos['id']."</td>
+		    			<td class='campotablas'>".$datos['monto_pago']."</td>
+						<td class='campotablas'>".$datos['fechapago']."</td>
+						<td class='campotablas'>".$datos['saldo']."</td>
+						<td class='campotablas'>".$datos['vendedor']."</td>";
+					
+				}
+				echo '</table><br>';
+			
+			
+		}
+		else
+		{
+			echo '<table width="60%" border="0" align="center" cellpding="0" cellspacing="0">
+						<tr> 
+							<td><font color="red">hay registro de ningun pago realizado</font></td>
+						</tr>
+				  	</table><br>';
+			
+		}
+	
+		
+		$a=sacar_registro_bd($usuario_consulta);
+		$codigo_pedido=$a["id_venta"];
+		$fecha_pedido=$a["fecha_venta"];
+		$monto_total=$a["total"];
+		$estado_pedido=$a["estado_venta"];
 	
 	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;" );	
 		//echo "SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;";
@@ -195,6 +237,10 @@
 	<td class="campotablas">'.$estado_pedido.'</td>
   </tr>
 </table> <br>';
+
+
+
+
 
 echo'
 
