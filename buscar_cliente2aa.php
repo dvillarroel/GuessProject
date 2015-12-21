@@ -160,7 +160,8 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Nombres</td>
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
-    <td class="campotablasSP2" >Fecha de Suscripcion</td>
+    <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Pedidos adeudados</td>
 	<td class="campotablasSP2" >Detalles</td>
   	</tr>';
 		
@@ -176,6 +177,18 @@ if(!empty($_POST['buscar']))
 				}
 				else
 				{
+					$codigo_cliente=$registro['codigo_cliente'];
+					$usuario_consulta2 = mysql_query("SELECT sum(monto_saldo) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado';" );	
+					$a2=sacar_registro_bd($usuario_consulta2);
+					$saldo=$a2['p'];
+					if($saldo == '')
+					{
+						$saldo=0;
+					}
+					
+					$usuario_consulta3 = mysql_query("SELECT count(id_venta) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado'" );	
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$countPedidos=$a3['p'];
 					
 		echo "<tr>";
 		echo "
@@ -185,7 +198,8 @@ if(!empty($_POST['buscar']))
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;".$registro['fecha_sus']."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
+				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						
@@ -233,7 +247,8 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Nombres</td>
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
-    <td class="campotablasSP2" >Fecha de Suscripcion</td>
+    <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Pedidos adeudados</td>
 	<td class="campotablasSP2" >Detalles</td>
   	</tr>';
 		
@@ -249,16 +264,29 @@ if(!empty($_POST['buscar']))
 				}
 				else
 				{
+										$codigo_cliente=$registro['codigo_cliente'];
+					$usuario_consulta2 = mysql_query("SELECT sum(monto_saldo) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado';" );	
+					$a2=sacar_registro_bd($usuario_consulta2);
+					$saldo=$a2['p'];
+					if($saldo == '')
+					{
+						$saldo=0;
+					}
+					
+					$usuario_consulta3 = mysql_query("SELECT count(id_venta) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado'" );	
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$countPedidos=$a3['p'];
 					
 		echo "<tr>";
-		echo "
+	echo "
 				<td  class='campotablasSP'>&nbsp;".$registro['codigo_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['ci_cliente']."</td>
    				<td  class='campotablasSP'>&nbsp;".$registro['apellido_paterno']." " .$registro['apellido_materno']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;".$registro['fecha_sus']."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
+				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						
@@ -315,7 +343,8 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Nombres</td>
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
-    <td class="campotablasSP2" >Fecha de Suscripcion</td>
+    <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Pedidos adeudados</td>
 	<td class="campotablasSP2" >Detalles</td>
   	</tr>';
 		
@@ -331,7 +360,18 @@ if(!empty($_POST['buscar']))
 				}
 				else
 				{
+					$codigo_cliente=$registro['codigo_cliente'];
+					$usuario_consulta2 = mysql_query("SELECT sum(monto_saldo) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado';" );	
+					$a2=sacar_registro_bd($usuario_consulta2);
+					$saldo=$a2['p'];
+					if($saldo == '')
+					{
+						$saldo=0;
+					}
 					
+					$usuario_consulta3 = mysql_query("SELECT count(id_venta) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado'" );	
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$countPedidos=$a3['p'];
 		echo "<tr>";
 		echo "
 				<td  class='campotablasSP'>&nbsp;".$registro['codigo_cliente']."</td>
@@ -340,7 +380,8 @@ if(!empty($_POST['buscar']))
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;".$registro['fecha_sus']."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
+				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						

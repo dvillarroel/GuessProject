@@ -96,16 +96,16 @@
 						<h1 class="text-light">Administrar Pagos<span class="mif-calculator place-right"></span></h1>
 						<hr class="thin bg-grayLighter">
 												
-						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+						<li><a href="listar_pedidos_nocancelados.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Listar Pedidos que no fueron cancelados</span>
                         </a></li>						<br>
-												<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+						<li><a href="listar_clientesdeudores.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Listar Clientes que deben</span>
                         </a></li>						
 						<br>
-						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+						<li><a href="registrar_pagoPedido.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Pago Pedido</span>
                         </a></li>						<br>

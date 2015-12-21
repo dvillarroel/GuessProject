@@ -70,24 +70,12 @@
 <?php
 $codigo_pedido=$_GET['id_pedido'];
 $codigo_cliente=$_GET['id_cliente'];
-$codigo_saldo=$_GET['id_saldo'];
+$monto=$_POST['monto'];
+$fecha=$_POST['correo_electronico'];
 
 require_once("manejomysql.php");
 conectar_bd();
-
-$monto_total2 = mysql_query("Select SUM(monto_parcial) as p from detalle_venta where id_venta=$codigo_pedido;");
-$mont=sacar_registro_bd($monto_total2);
-$total=$mont['p'];
-if($total > 0)
-{ mysql_query("UPDATE venta SET TOTAL=$total WHERE ID_VENTA=$codigo_pedido");
-	if($codigo_pedido > 0)
-	{
-		mysql_query("UPDATE anticipo SET monto_pedido=$total, estado='Entregado' WHERE cod_saldo=$codigo_saldo");
-		
-		$resulto= consulta_bd("SELECT max(id_vv) as p FROM ventavendedor" );
-		$a=sacar_registro_bd($resulto);
-		$nc=$a['p']+1;
-		
+	
 		$queryuser = mysql_query("SELECT cod_user FROM session");
 		$querydatos = sacar_registro_bd($queryuser);
 		$consultauser = mysql_query("SELECT nombre, apellidoP, apellidoM FROM persona where cod_usuario=".$querydatos['cod_user']);
@@ -95,84 +83,70 @@ if($total > 0)
 		$cod_vendedor=$querydatos['cod_user'];
 		$name_vendedor=$querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
 		
-		if($codigo_saldo == '')
-		{
-			$codigo_saldo=0;
-		}
-		$anticipoQuery=mysql_query("select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo");
+		//echo '<div align="center"><font color="blue" size="4" class="titl">El cliente tiene un anticipo que se registrara en el pago del Pedido.</font><br></div>';
+	
+		//echo "SELECT monto_saldo, monto_pagado, estado_pagado FROM venta where id_venta=$codigo_pedido";
+		$pedido= consulta_bd("SELECT monto_saldo, monto_pagado, estado_pagado FROM venta where id_venta=$codigo_pedido" );
 		
-			//echo "select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo";
 		
-		$montopago=0;
-		if (mysql_num_rows($anticipoQuery) != 0)
-		{ 
-			$registroanticipo = sacar_registro_bd($anticipoQuery);
-			$montoanticipo=$registroanticipo['monto_favor'];
-			$montopago=$total-$registroanticipo['monto_favor'];
-			if($montopago >= 0 )
-			{
-				echo '<div align="center"><font color="blue" size="4" class="titl">El cliente tiene un anticipo que se registrara en el pago del Pedido.</font><br></div>';
+		$infoPedido=sacar_registro_bd($pedido);
+		$montoSaldoPedido=$infoPedido['monto_saldo'];
+		//echo "monto saldo =".$montoSaldoPedido;
+		$montoPagadoPedido=$infoPedido['monto_pagado'];
+		//echo "monto pagado=".$montoPagadoPedido;
+		
   
-				$queryfecha=consulta_bd("SELECT CURRENT_DATE as date" );
-				$registroFecha= sacar_registro_bd($queryfecha);
-				$fechaReg=$registroFecha['date'];
+  
+				$fechaReg=$_POST['correo_electronico'];
+				//echo "SELECT max(id) as p FROM pago_pedido";
 				$pagoid= consulta_bd("SELECT max(id) as p FROM pago_pedido" );
 				$pagoA=sacar_registro_bd($pagoid);
 				$codPago=$pagoA['p']+1;
-				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$montoanticipo,'No Cancelado', $montopago, $cod_vendedor,'$name_vendedor' );" );
-				mysql_query("UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=$montoanticipo, monto_saldo=$montopago WHERE ID_VENTA=$codigo_pedido");
 				
-										echo '<br><table>
+				$estadoPago = 'No Cancelado';
+				if($monto == $montoSaldoPedido)
+				{
+					$estadoPago = 'Cancelado';
+				}
+				
+				$saldoPago = $montoSaldoPedido - $monto;
+				//echo "saldo despues de restar pago".$saldoPago;
+				
+				//echo "insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$monto,'$estadoPago', $saldoPago, $cod_vendedor,'$name_vendedor' );";
+				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$monto,'$estadoPago', $saldoPago, $cod_vendedor,'$name_vendedor' );" );
+				
+				
+				$montoPagado=$montoPagadoPedido + $monto;
+				
+				if($saldoPago == 0)
+				{
+					//echo "UPDATE venta SET estado_pagado='Cancelado', monto_pagado=$montoPagado, monto_saldo=$saldoPago WHERE ID_VENTA=$codigo_pedido";
+					mysql_query("UPDATE venta SET estado_pagado='Cancelado', monto_pagado=$montoPagado, monto_saldo=$saldoPago WHERE ID_VENTA=$codigo_pedido");
+					
+					
+					echo '<div align="center"><font color="blue" size="4" class="titl">El Cliente ha cancelado la totalidad del Pedido.</font><br></div>';
+					
+					
+				}
+				else
+				{
+					//echo "UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=$montoanticipo, monto_saldo=$montopago WHERE ID_VENTA=$codigo_pedido";
+					//echo "UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=$montoPagado, monto_saldo=$montoPagado WHERE ID_VENTA=$codigo_pedido";
+					mysql_query("UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=$montoPagado, monto_saldo=$saldoPago WHERE ID_VENTA=$codigo_pedido");
+					
+					echo '<br><table>
 						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
-						<td><font color="red">'.$montopago.'</font></td>
+						<td><font color="red">'.$saldoPago.'</font></td>
 						</tr>
 						<tr> <td><a href=registrar_pago.php?id_pedido='.$codigo_pedido.'&id_cliente='.$codigo_cliente.'>Registrar Pago Pedido</a> </td>
 						
 						</tr>
 						</table>
 							';
+					
+					
+				}
 				
-			}
-			else
-			{
-				echo '<div align="center"><font color="blue" size="4" class="titl">El cliente tiene un anticipo que se registrara en el pago del Pedido.</font><br></div>';
-				$queryfecha=consulta_bd("SELECT CURRENT_DATE as date" );
-				$registroFecha= sacar_registro_bd($queryfecha);
-				$fechaReg=$registroFecha['date'];
-				$pagoid= consulta_bd("SELECT max(id) as p FROM pago_pedido" );
-				$pagoA=sacar_registro_bd($pagoid);
-				$codPago=$pagoA['p']+1;
-				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$total,'Cancelado', 0, $cod_vendedor,'$name_vendedor');" );
-
-				echo '<div align="center"><font color="blue" size="4" class="titl">Debido a que el anticipo es mayor al monto del pedido, se debe devolver cambio: <font color="red">'.$montopago.'Bs.</font> o registrar un nuevo anticipo por la cantidad especificada </font><br></div>';
-				
-				echo "<br><br>"; 
-				mysql_query("UPDATE venta SET estado_pagado='Cancelado', monto_pagado=$total, monto_saldo=0 WHERE ID_VENTA=$codigo_pedido");
-				
-				
-				
-				
-			}
-			
-		}
-		else
-		{
-//			echo 'hola';
-			mysql_query("UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=0, monto_saldo=$total WHERE ID_VENTA=$codigo_pedido");
-	//	echo "UPDATE venta SET estado_pagado='No Cancelado', monto_pago=0, monto_saldo=$total WHERE ID_VENTA=$codigo_pedido";
-		}
-				
-		mysql_query("insert into ventavendedor values($nc, $codigo_pedido,$cod_vendedor,'$name_vendedor',null,null);" );
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
 	
 				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido");
   				if (mysql_num_rows($querypagos) != 0)
@@ -205,40 +179,13 @@ if($total > 0)
 						
 					}
 				}
-				else
-				{
-						echo '<br><table>
-						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
-						<td><font color="red">'.$total.'</font></td>
-						</tr>
-						<tr> <td><a href=registrar_pago.php?id_pedido='.$codigo_pedido.'&id_cliente='.$codigo_cliente.'>Registrar Pago Pedido</a> </td>
-						
-						</tr>
-						</table>
-							';
-					
-				}
+
 				
 				echo '<br><br>
-			<div align="center"><font color="#330000" size="4" class="titl">EL PEDIDO FUE REGISTRADO CORRECTAMENTE, Para completar el pedido, proceder a la entrega y realizar el Correspondiente registro.</font><br>
+			<div align="center"><font color="#330000" size="4" class="titl">EL PAGO FUE REGISTRADO CORRECTAMENTE.</font><br>
    
   </div>';
 				
-  
-}
-else
-{
-		echo '<br><br><table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">EL PEDIDO NO TIENE NINGUN PRODUCTO ADICIONADO, REVISAR PEDIDO</font></td></tr>
-    		<tr><td><font color="#003366">';
-			
-echo "<a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$codigo_cliente.">VOLVER AL PEDIDO</a></p>";
-echo'	</font></td></tr>
-
-  		</tr>
-	</table>';	
-}
 
 ?>
                     <hr class="thin bg-grayLighter">

@@ -154,7 +154,7 @@
 						$fecha=$registro7['date'];
 	
 							echo '
-						<table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
+						<form action="registrar_Pago2.php?id_pedido='.$cod_pedido.'&id_cliente='.$var.'"  method="post"><table width="70%" border="0" align="center" cellpding="0" cellspacing="0">
 						<tr> 
 					<td colspan="4" class="title">Registrar Pago</td>
 				  </tr>
@@ -379,10 +379,10 @@ echo'
 				
 		}
 			echo '<br><table width="40%" border="0" align="center" >
-    <tr></form>
+    <tr>
       <td align="center"></td>
        <td align="center">
-	    <form action="registrar_entregaPedido.php?id_pedido='.$codigo_pedido.'" method="post"><td align="center">            <div class="form-actions"><button type="submit" class="button primary">Registrar entrega</button></div> 
+	    <td align="center">            <div class="form-actions"><button type="submit" class="button primary">Registrar Pago</button></div> 
 		</td> </form>
          <td align="center">
 	    <form action="administrar_pedidos.php" method="post"><td align="center"><button type="submit" class="button primary">Cancelar</button> 

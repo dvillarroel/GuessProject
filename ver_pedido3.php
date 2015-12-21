@@ -193,13 +193,16 @@ echo'
 
 <br>';
 	
-	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;" );	
+	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta, estado_pagado, monto_saldo, monto_pagado FROM venta WHERE id_venta=$cod_pedido;" );	
 
 		$a=sacar_registro_bd($usuario_consulta);
 		$codigo_pedido=$a["id_venta"];
 		$fecha_pedido=$a["fecha_venta"];
 		$monto_total=$a["total"];
 		$estado_pedido=$a["estado_venta"];
+		$totalsaldo=$a["monto_saldo"];
+		$montoCancelado=$a["monto_pagado"];
+		$estadoCancelado=$a["estado_pagado"];
 		
 		echo '
 		<table width="70%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -214,11 +217,78 @@ echo'
 	<td class="campotablas">'.$fecha_pedido.'</td></form>  </tr>
   <tr> 
     <td class="campotablas">Monto Total:</td>
-    <td class="campotablas">'.$monto_total.'</td>
+    <td class="campotablas">'.$monto_total.' Bs.</td>
     <td class="campotablas">Estado Pedido</td>
 	<td class="campotablas">'.$estado_pedido.'</td>
   </tr>
+  <tr> 
+    <td class="campotablas">Estado Cancelado:</td>
+    <td class="campotablas"><font color="blue">'.$estadoCancelado.'</font></td>
+    <td class="campotablas">Monto Saldo</td>
+	<td class="campotablas"><font color="red">'.$totalsaldo.' Bs.</font></td>
+  </tr>
 </table>';
+
+			//echo "SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido";
+			$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido");
+			
+			
+  				if (mysql_num_rows($querypagos) != 0)
+				{	
+					$queryPagos2 = mysql_query("SELECT id, fechapago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$codigo_pedido;" );	
+					//echo "SELECT id, fechapago, monto_pago, saldo, vendedor from pago_pedido where id_venta=$codigo_pedido;";
+
+					if (mysql_num_rows($queryPagos2) != 0)
+					{
+						  echo '<br><table width="70%" border="1" align="center" cellpding="0" cellspacing="0">
+								<tr> 
+								<td class="title">Codigo Pago</td>
+								<td class="title">Monto Pagado</td>
+								<td class="title">Fecha que se realizo Pago</td>
+								<td class="title">Saldo</td>
+								<td class="title">Vendedor que registro el Pago</td><tr>';
+							for ( $i=0; $i< cuantos_registros_bd($queryPagos2); $i++)
+							{
+								$datos=sacar_registro_bd($queryPagos2);
+								
+								echo "<tr><td class='campotablas'>".$datos['id']."</td>
+									<td class='campotablas'>".$datos['monto_pago']."</td>
+									<td class='campotablas'>".$datos['fechapago']."</td>
+									<td class='campotablas'>".$datos['saldo']."</td>
+									<td class='campotablas'>".$datos['vendedor']."</td><tr>";
+								
+							}
+							echo '</table><br>';
+						
+							
+						
+					}
+					$queryventas = mysql_query("SELECT monto_saldo FROM venta where id_venta=$codigo_pedido");
+					
+					$datosVentas=sacar_registro_bd($queryventas);
+					if($datosVentas['monto_saldo'] != 0)
+					{
+						echo '<br><table>
+						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
+						<td><font color="red">'.$totalsaldo.'</font></td>
+						</tr>
+						</table><br>
+							';
+						
+					}
+					
+				}
+				else
+				{
+						echo '<br><table>
+						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
+						<td><font color="red">'.$totalsaldo.'</font></td>
+						</tr>
+						</table><br>
+							';
+					
+				}
+
 
 	//echo "SELECT codigo_detalle, cod_usuario, codigo_producto, id_venta, codigo_cliente, cantidad, precio_unitario, monto_parcial FROM detalle_venta WHERE id_venta=".$codigo_pedido;
 	$usuario_consulta = mysql_query("SELECT codigo_detalle, cod_usuario, codigo_producto, id_venta, codigo_cliente, cantidad, precio_unitario, monto_parcial FROM detalle_venta WHERE id_venta=".$codigo_pedido);	

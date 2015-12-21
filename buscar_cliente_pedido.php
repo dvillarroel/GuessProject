@@ -48,7 +48,7 @@
 	</style>
 </head>
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-<body background="body2.jpg">
+
 <p>&nbsp;</p>
 
 <form method="post" action="buscar_cliente2aa.php">
