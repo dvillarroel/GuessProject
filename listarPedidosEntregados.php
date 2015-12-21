@@ -141,9 +141,9 @@
 	if($periodo == 'Del Dia')
 	{
 		$today = date('Y-m-d');					  
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and fecha_venta='$today'";
+		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'";
 		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'");
-		echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'";
+		//echo mysql_num_rows($usuario_consulta);
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -267,8 +267,8 @@
 		echo "Periodo seleccionado entre: ".$start;
 		echo " al: ".$end;
 						
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE fecha_entrega='Ejecutado' and fecha_entrega>='$start'");
+		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE fecha_entrega='Ejecutado' and fecha_entrega>='$start'";
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start'");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
@@ -389,7 +389,7 @@
 		echo "Periodo seleccionado entre: ".$start;
 		echo " al: ".$end;
 						
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
+		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'";
 		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)

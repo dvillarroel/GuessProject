@@ -177,16 +177,16 @@
 					<td class="title">Monto Pagado</td>
 					<td class="title">Fecha que se realizo Pago</td>
 					<td class="title">Saldo</td>
-					<td class="title">Vendedor que registro el Pago</td>';
+					<td class="title">Vendedor que registro el Pago</td></tr>';
 				for ( $i=0; $i< cuantos_registros_bd($queryPagos); $i++)
 				{
 					$datos=sacar_registro_bd($queryPagos);
 					
-					echo "<td class='campotablas'>".$datos['id']."</td>
+					echo "<tr><td class='campotablas'>".$datos['id']."</td>
 		    			<td class='campotablas'>".$datos['monto_pago']."</td>
 						<td class='campotablas'>".$datos['fechapago']."</td>
 						<td class='campotablas'>".$datos['saldo']."</td>
-						<td class='campotablas'>".$datos['vendedor']."</td>";
+						<td class='campotablas'>".$datos['vendedor']."</td></tr>";
 					
 				}
 				echo '</table><br>';
@@ -210,7 +210,7 @@
 		$monto_total=$a["total"];
 		$estado_pedido=$a["estado_venta"];
 	
-	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;" );	
+	$usuario_consulta = mysql_query("SELECT id_venta, fecha_venta, total, estado_venta, estado_pagado, monto_pagado, monto_saldo FROM venta WHERE id_venta=$cod_pedido;" );	
 		//echo "SELECT id_venta, fecha_venta, total, estado_venta FROM venta WHERE id_venta=$cod_pedido;";
 		
 		$a=sacar_registro_bd($usuario_consulta);
@@ -218,6 +218,8 @@
 		$fecha_pedido=$a["fecha_venta"];
 		$monto_total=$a["total"];
 		$estado_pedido=$a["estado_venta"];
+		$monto_pagado=$a['monto_pagado'];
+		$monto_saldo=$a['monto_saldo'];
 		
 		echo '
 		<table width="70%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -231,10 +233,16 @@
 	<form action="modificar_fechaPedido.php" method="post" name="ventas">
 	<td class="campotablas">'.$fecha_pedido.'</td></form>  </tr>
   <tr> 
-    <td class="campotablas"><font color="red">Monto Total:</font></td>
-    <td class="campotablas"><font color="red">'.$monto_total.'</font></td>
+    <td class="campotablas"><font color="blue">Monto Total:</font></td>
+    <td class="campotablas"><font color="blue">'.$monto_total.'</font></td>
     <td class="campotablas">Estado Pedido</td>
 	<td class="campotablas">'.$estado_pedido.'</td>
+  </tr>
+    <tr> 
+    <td class="campotablas"><font color="red">Monto Pagado:</font></td>
+    <td class="campotablas"><font color="red">'.$monto_pagado.'</font></td>
+    <td class="campotablas"><font color="red">Saldo</font></td>
+	<td class="campotablas"><font color="red">'.$monto_saldo.'</font></td>
   </tr>
 </table> <br>';
 

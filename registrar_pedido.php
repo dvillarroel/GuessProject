@@ -95,9 +95,13 @@ if($total > 0)
 		$cod_vendedor=$querydatos['cod_user'];
 		$name_vendedor=$querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
 		
+		if($codigo_saldo == '')
+		{
+			$codigo_saldo=0;
+		}
 		$anticipoQuery=mysql_query("select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo");
 		
-		echo "select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo";
+			//echo "select monto_favor from anticipo WHERE cod_saldo=$codigo_saldo";
 		
 		$montopago=0;
 		if (mysql_num_rows($anticipoQuery) != 0)
@@ -116,6 +120,17 @@ if($total > 0)
 				$pagoA=sacar_registro_bd($pagoid);
 				$codPago=$pagoA['p']+1;
 				mysql_query("insert into pago_pedido values($codPago,$codigo_pedido, $codigo_cliente, '$fechaReg',$montoanticipo,'No Cancelado', $montopago, $cod_vendedor,'$name_vendedor' );" );
+				mysql_query("UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=$montoanticipo, monto_saldo=$montopago WHERE ID_VENTA=$codigo_pedido");
+				
+										echo '<br><table>
+						<tr> <td><font color="red">El cliente todavia no ha cancelado el pedido por completo, el saldo es:</font> </td>
+						<td><font color="red">'.$montopago.'</font></td>
+						</tr>
+						<tr> <td><a href=registrar_pago.php?id_pedido='.$codigo_pedido.'&id_cliente='.$codigo_cliente.'>Registrar Pago Pedido</a> </td>
+						
+						</tr>
+						</table>
+							';
 				
 			}
 			else
@@ -132,14 +147,19 @@ if($total > 0)
 				echo '<div align="center"><font color="blue" size="4" class="titl">Debido a que el anticipo es mayor al monto del pedido, se debe devolver cambio: <font color="red">'.$montopago.'Bs.</font> o registrar un nuevo anticipo por la cantidad especificada </font><br></div>';
 				
 				echo "<br><br>"; 
+				mysql_query("UPDATE venta SET estado_pagado='Cancelado', monto_pagado=$total, monto_saldo=0 WHERE ID_VENTA=$codigo_pedido");
+				
+				
+				
 				
 			}
 			
 		}
 		else
 		{
-			
-			
+//			echo 'hola';
+			mysql_query("UPDATE venta SET estado_pagado='No Cancelado', monto_pagado=0, monto_saldo=$total WHERE ID_VENTA=$codigo_pedido");
+	//	echo "UPDATE venta SET estado_pagado='No Cancelado', monto_pago=0, monto_saldo=$total WHERE ID_VENTA=$codigo_pedido";
 		}
 				
 		mysql_query("insert into ventavendedor values($nc, $codigo_pedido,$cod_vendedor,'$name_vendedor',null,null);" );

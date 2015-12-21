@@ -108,7 +108,7 @@
 </head>
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body class="bg-steel">
+<body>
    <div class="page-content2">
         <div class="flex-grid no-responsive-future" style="height: 100%;">
             <div class="row" style="height: 100%">
@@ -116,17 +116,23 @@
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
                     <h1 class="text-light">Lista de Pedidos por Entregar:<span class="mif-search place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-						<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
+						<table class="dataTable border bordered" data-role="datatable" data-auto-width="false" >
+							<thead>
 							<tr>
-								<td class="title">Codigo Pedido</td>
-								<td class="title">Nombre Cliente</td>
-								<td class="title">Monto Total</td>
-								<td class="title">Fecha </td>
-								<td class="title">Estado </td>
-								<td class="title">Detalle Pedido</td>
-								<td class="title">Registrado Por</td>
+								<td class="sortable-column sort-asc">Codigo Pedido</td>
+								<td class="sortable-column">Nombre Cliente</td>
+								<td class="sortable-column">Monto Total</td>
+								<td class="sortable-column">Fecha </td>
+								<td class="sortable-column">Estado </td>
+								<td class="sortable-column">Estado Pagado</td>
+								<td class="sortable-column">Monto Pagado</td>
+								<td class="sortable-column">Monto Por Pagar</td>
+								<td class="sortable-column">Detalle Pedido</td>
+								<td class="sortable-column">Registrado Por</td>
 					
 							</tr>
+							</thead>
+							<tbody>
 					
 
 <?php
@@ -137,7 +143,7 @@
 
 		$today = date('Y-m-d');					  
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='No Ejecuto' and total > 0";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='No Ejecuto' and total > 0");
+		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, estado_pagado, monto_pagado, monto_saldo FROM venta WHERE estado_venta='No Ejecuto' and total > 0");
 		
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
@@ -169,8 +175,23 @@
 		    			<td class='campotablas'>".$nombre_cliente."</td>
 						<td class='campotablas'>".$monto."</td>
 						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
+						<td class='campotablas'>".$estado."</td>";
+						
+						if ($a['estado_pagado'] == 'Cancelado')
+						{
+							echo "<td class='campotablas'><font color='green'>".$a['estado_pagado']."</font></td>
+							<td class='campotablas'><font color='green'>".$a['monto_pagado']."</font></td>
+							<td class='campotablas'><font color='green'>".$a['monto_saldo']."</font></td>";
+
+						}
+						else
+						{
+							echo "<td class='campotablas'><font color='red'>".$a['estado_pagado']."</font></td>
+							<td class='campotablas'><font color='red'>".$a['monto_pagado']."</font></td>
+							<td class='campotablas'><font color='red'>".$a['monto_saldo']."</font></td>";
+						}
+
+						echo "<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
 						<td class='campotablas'>".$nombre_vendedor."</td>
 						";
 									
@@ -188,7 +209,7 @@
 	  
   
 ?>  
-		</table>
+		<tbody>	</table>
 		<hr class="thin bg-grayLighter">
 		<p align="center"><a href="administrar_pedidos.php">VOLVER ATRAS</a></p>
 		</div>

@@ -69,16 +69,18 @@
                             <span class="mif-apps icon"></span>
                             <span class="title">Realizar Pedido</span>
                         </a></li><br>
-						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+												<li><a href="listarpedidosxentregar.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Anticipo de Pedido</span>
+                            <span class="title">Listar Pedidos por Entregar</span>
                         </a></li>
 						<br>
-						<li><a href="modificar_anticipo.php" target="mainFrame">
+						
+						<li><a href="listar_pedidos_x_entregados.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Modificar o Cancelar Registro de Anticipo de Pedido</span>
+                            <span class="title">Listar Pedidos Entregados</span>
                         </a></li>
-						<br>
+
+												<br>
 						<li><a href="registrar_entregaP.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Entrega de Pedido</span>
@@ -89,15 +91,38 @@
                             <span class="title">Cancelar Pedido Registrado</span>
                         </a></li>
 						<br>
-						<li><a href="listarpedidosxentregar.php" target="mainFrame">
+
+
+						<h1 class="text-light">Administrar Pagos<span class="mif-calculator place-right"></span></h1>
+						<hr class="thin bg-grayLighter">
+												
+						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Listar Pedidos por Entregar</span>
-                        </a></li>
+                            <span class="title">Listar Pedidos que no fueron cancelados</span>
+                        </a></li>						<br>
+												<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Listar Clientes que deben</span>
+                        </a></li>						
 						<br>
-						<li><a href="listar_pedidos_x_entregados.php" target="mainFrame">
+						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Listar Pedidos Entregados</span>
+                            <span class="title">Registrar Pago Pedido</span>
+                        </a></li>						<br>
+
+						<h1 class="text-light">Administrar Anticipos<span class="mif-calculator place-right"></span></h1>
+						<hr class="thin bg-grayLighter">
+						<li><a href="registrar_anticipo_pedido.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Registrar Anticipo de Pedido</span>
+                        </a></li>				<br>		
+
+												<li><a href="modificar_anticipo.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Modificar o Cancelar Registro de Anticipo de Pedido</span>
                         </a></li>
+
+
                     <hr class="thin bg-grayLighter">
 				</div>
             </div>
