@@ -109,6 +109,13 @@
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Pago Pedido</span>
                         </a></li>						<br>
+						<h1 class="text-light">Ingresos<span class="mif-calculator place-right"></span></h1>
+						<hr class="thin bg-grayLighter">
+						<li><a href="listar_ingresos.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Listar Ingresos</span>
+                        </a></li>				<br>		
+										
 
 						<h1 class="text-light">Administrar Anticipos<span class="mif-calculator place-right"></span></h1>
 						<hr class="thin bg-grayLighter">
