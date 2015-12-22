@@ -116,25 +116,7 @@
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
                     <h1 class="text-light">Ingresos correspondientes al Periodo Seleccionado: <?php echo $_POST['select']; ?><span class="mif-search place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-						<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
-							<tr>
-								<td class="title">Codigo Pedido</td>
-								<td class="title">Nombre Cliente</td>
-								<td class="title">Monto Total</td>
-								<td class="title">Fecha Registro</td>
-								<td class="title">Fecha Entrega</td>
-								<td class="title">Estado </td>
-								<td class="title">Detalle_Pedido</td>
-								<td class="title">Vendedor que Registro el Pedido</td>
-								<td class="title">Vendedor que Realizo la Entrega</td>
-							</tr>
-					
 
-					Total Ingresos:
-					Ingresos por pago de Pedidos Registrados en el periodo seleccionado:
-					Saldo por Cobrar de Pedidos Registrados en el periodo seleccionado:
-					Ingresos por Pago de pedidos registrados anterioremente:
-				
 					
 <?php
 
@@ -147,120 +129,110 @@
 	if($periodo == 'Del Dia')
 	{
 		$today = date('Y-m-d');					  
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega='$today'");
-		//echo mysql_num_rows($usuario_consulta);
-		if (mysql_num_rows($usuario_consulta) != 0)
+		
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE fechaPago='$today'");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					
-					$estado=$a['estado_venta'];
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-									
-						
-					echo '</tr>';
-				}
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta where fecha_venta='$today'");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
+		
+		
 		
 	}
 	
 	if($periodo == 'De la Semana')
 	{
 		$d = strtotime("today");
-		$start_week = strtotime("last monday midnight",$d);
-		$end_week = strtotime("next sunday",$d);
+		$start_week = strtotime("last sunday midnight",$d);
+		$end_week = strtotime("next saturday",$d);
 		$start = date("Y-m-d",$start_week); 
 		$end = date("Y-m-d",$end_week); 
 		echo "Periodo seleccionado entre: ".$start;
 		echo " al: ".$end;
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start'");
-//			echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and fecha_venta>='$start'";
-		if (mysql_num_rows($usuario_consulta) != 0)
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE fechaPago >='$start' and fechaPago<='$end'");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					$estado=$a['estado_venta'];
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;");	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-									
-						
-					echo '</tr>';
-			
-				}
-			
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta where fecha_venta>='$start' and fecha_venta<='$end'");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
+			
+		
+		
 	}
 	
 	if($periodo == 'Del mes actual')
@@ -273,56 +245,49 @@
 		echo "Periodo seleccionado entre: ".$start;
 		echo " al: ".$end;
 						
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE fecha_entrega='Ejecutado' and fecha_entrega>='$start'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start'");
-		
-		if (mysql_num_rows($usuario_consulta) != 0)
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE fechaPago >='$start' and fechaPago<='$end'");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					$estado=$a['estado_venta'];
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-									
-						
-					echo '</tr>';
-				}
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta where fecha_venta>='$start' and fecha_venta<='$end'");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
 	}
 	
 	if($periodo == 'Del mes anterior')
@@ -335,57 +300,49 @@
 		echo "Periodo seleccionado entre: ".$start;
 		echo " al: ".$end;
 						
-		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado' and (fecha_venta>='$start' or fecha_venta<='$end')";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'");
-		
-	
-		if (mysql_num_rows($usuario_consulta) != 0)
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE fechaPago >='$start' and fechaPago<='$end'");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					$estado=$a['estado_venta'];
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-									
-						
-					echo '</tr>';
-				}
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta where fecha_venta>='$start' and fecha_venta<='$end'");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
 	}
 
 	if($periodo == 'Seleccionar Periodo de Tiempo')
@@ -396,119 +353,135 @@
 		echo " al: ".$end;
 						
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado' and fecha_entrega>='$start' and fecha_entrega<='$end'");
-		
-		if (mysql_num_rows($usuario_consulta) != 0)
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE fechaPago >='$start' and fechaPago<='$end'");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					$estado=$a['estado_venta'];
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-
-									
-						
-					echo '</tr>';
-				}
-			
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta where fecha_venta>='$start' and fecha_venta<='$end'");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
 	}
 	
 	if($periodo == 'Todos los Pedidos')
 	{
 				
 		//echo "SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta FROM venta WHERE estado_venta='Ejecutado'";
-		$usuario_consulta = mysql_query("SELECT id_venta, codigo_cliente,  fecha_venta, total, estado_venta, fecha_entrega FROM venta WHERE estado_venta='Ejecutado'");
-		
-		if (mysql_num_rows($usuario_consulta) != 0)
+		$usuario_consulta = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido");
+		$a=sacar_registro_bd($usuario_consulta);
+		$totalIngresos=0;
+		if($a['p']== '')
 		{
-			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
-				{
-					echo '<tr>'; 
-					$a=sacar_registro_bd($usuario_consulta);
-					
-					$cod_pedido=$a['id_venta'];
-					$codigo_cliente=$a['codigo_cliente'];
-					$monto=$a['total'];
-					$fecha=$a['fecha_venta'];
-					$estado=$a['estado_venta'];
-					//echo "SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;";
-					
-					$usuario_consulta2 = mysql_query("SELECT nombre_cliente, apellido_paterno, direccion_cliente, observaciones_cliente FROM cliente WHERE codigo_cliente=$codigo_cliente;" );	
-					$a2=sacar_registro_bd($usuario_consulta2);
-					$nombre_cliente=$a2['nombre_cliente']." ".$a2['apellido_paterno'];
-					$direccion=$a2['direccion_cliente'];
-					$observaciones=$a2['observaciones_cliente'];
-					
-					//recover vendedor
-					$usuario_consultaV = mysql_query("SELECT nombrevendedor, nombreentrego FROM ventavendedor WHERE id_venta=$cod_pedido;" );	
-					$aV=sacar_registro_bd($usuario_consultaV);
-					$nombre_vendedor=$aV['nombrevendedor'];
-					$nombre_entrego=$aV['nombreentrego'];
-							
-					$fecha_entrega=$a['fecha_entrega'];		
-					echo "
-						<td class='campotablas'>".$cod_pedido."</td>
-		    			<td class='campotablas'>".$nombre_cliente."</td>
-						<td class='campotablas'>".$monto."</td>
-						<td class='campotablas'>".$fecha."</td>
-						<td class='campotablas'>".$fecha_entrega."</td>
-						<td class='campotablas'>".$estado."</td>
-		    			<td class='campotablas'><a href=ver_pedido3.php?id_pedido=".$cod_pedido."&id_cliente=".$codigo_cliente.">Ver Detalle Pedido </a></td>
-						<td class='campotablas'>".$nombre_vendedor."</td>
-						<td class='campotablas'>".$nombre_entrego."</td>
-						";
-									
-						
-					echo '</tr>';
-				}
+			$totalIngresos=0;
 		}
 		else
 		{
-			echo '<tr><td >No hay registro de pedidos para el periodo seleccionado</td></tr>';
+			$totalIngresos=$a['p'];
+			
 		}
+		
+		$totalPedidosPeriodo=0;
+		$totalPedidosSaldo=0;
+		
+		$usuario_consulta2 = mysql_query("select id_venta from venta");
+		$numeroPedidos=cuantos_registros_bd($usuario_consulta2);
+		if (mysql_num_rows($usuario_consulta2) != 0)
+		{
+			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta2); $i++)
+			{
+				$a2=sacar_registro_bd($usuario_consulta2);
+				$id_venta=$a2['id_venta'];
+				$usuario_consulta3 = mysql_query("SELECT sum(monto_pago) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta3) != 0)
+				{
+					$a3=sacar_registro_bd($usuario_consulta3);
+					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
+
+				}
+				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				if (mysql_num_rows($usuario_consulta4) != 0)
+				{
+					$a4=sacar_registro_bd($usuario_consulta4);
+					$totalPedidosSaldo=$totalPedidosSaldo + $a4['p'];
+				}
+
+				
+			}
+			
+		}
+		$totalPedidosanteriores=$totalIngresos - $totalPedidosPeriodo;
 	}
 	  
   
 ?>  
-		</table>
+
+					
+					<table table width="50%" border="1" align="center" cellpding="0" cellspacing="0">
+						<tr> 
+							<td colspan="2" class="title">INFORMACI&Oacute;N INGRESOS</td>
+						</tr>
+						<tr> 
+							<td class='campotablas'>Total Ingresos:</td>
+							<td class='campotablas'><font color="blue"><?php echo $totalIngresos; ?> Bs.</font></td>
+						</tr>
+						<tr> 
+							<td class='campotablas'>Numero de Pedidos Registrados en el periodo seleccionado:</td>
+							<td class='campotablas'><?php echo $numeroPedidos; ?></td>
+						</tr>
+						
+						<tr> 
+							<td class='campotablas'>Ingresos por pago de Pedidos Registrados en el periodo seleccionado:</td>
+							<td class='campotablas'><font color="green"><?php echo $totalPedidosPeriodo; ?> Bs.</font></td>
+						</tr>
+					
+						<tr> 
+							<td class='campotablas'>Saldo por Cobrar de Pedidos Registrados en el periodo seleccionado:</td>
+							<td class='campotablas'><font color="red"><?php echo $totalPedidosSaldo; ?> Bs.</font></td>
+						</tr>
+					
+						<tr> 
+							<td class='campotablas'>Ingresos por Pago de pedidos registrados anteriormente:</td>
+							<td class='campotablas'><font color="green"><?php echo $totalPedidosanteriores; ?> Bs.</font></td>
+						</tr>
+					</table>
+
 		<hr class="thin bg-grayLighter">
-		<p align="center"><a href="listar_pedidos_x_entregados.php">VOLVER ATRAS</a></p>
+		<p align="center"><a href="listar_ingresos.php">VOLVER ATRAS</a></p>
 		</div>
 			</div>
 		</div>
