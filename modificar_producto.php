@@ -45,7 +45,7 @@
     <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
   </tr>
 </table>
-<form action="modificar_producto2.php?id=<?php echo $codigo_producto;?>" method="post" name="ventas">
+<form action="modificar_producto2.php?id=<?php echo $codigo_producto;?>" method="post" name="ventas" enctype="multipart/form-data">
 
 <table width="80%" align="center" cellpadding="0" cellspacing="0">
   <tbody>
@@ -112,7 +112,7 @@
               <td height="27"class="campotablas">Precio Cliente Irregular:</td>
               <td class="campotablas"><input name="Precio_Irregular" type="text" class="Formulario" tabindex="3" value="0" maxlength="15" value="<?php echo $Precio_Irreg;?>"></td>
               <td height="27" class="campotablas">Modificar Imagen:</td>
-              <td class="campotablas"><input type="file" name="uploadField"></td>
+              <td class="campotablas"><input type="file" name="photo" /></td>
             </tr>
           </table>
           </table>

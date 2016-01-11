@@ -161,7 +161,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);
@@ -218,7 +218,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);
@@ -276,7 +276,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);
@@ -331,7 +331,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);
@@ -384,7 +384,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);
@@ -433,7 +433,7 @@
 					$totalPedidosPeriodo=$totalPedidosPeriodo + $a3['p'];
 
 				}
-				$usuario_consulta4 = mysql_query("SELECT sum(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
+				$usuario_consulta4 = mysql_query("SELECT min(saldo) as p FROM pago_pedido WHERE id_venta=$id_venta");
 				if (mysql_num_rows($usuario_consulta4) != 0)
 				{
 					$a4=sacar_registro_bd($usuario_consulta4);

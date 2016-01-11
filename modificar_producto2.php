@@ -18,17 +18,22 @@ if( !empty($_POST['ci']) && !empty($_POST['apellido_paterno']) )
 	$unidad=$_POST['Unidad'];
 	$observaciones=$_POST['observaciones'];
 	$estado='activo';
-	$imagen=$name.".jpg";
+
 	$Precio_pref=$_POST['Precio_Pref'];
 	$Precio_Reg=$_POST['Precio_Regular'];
 	$Precio_Irreg=$_POST['Precio_Irregular'];
 	//$estado='activo'
 
-	
+
 
 	$consulta="update producto set codigo_producto='$codigo_producto', nombre_producto='$name', nombre_chino='$nchino', nombre_ingles='$ningles', Precio_unitario_prod=$precio, stock=$stock, marca='$marca',industria='$industria', stock_minimo=$stock_minimo, unidad='$unidad', observaciones_producto='$observaciones', estado_producto='$estado', preferencial=$Precio_pref, regular=$Precio_Reg, irregular=$Precio_Irreg where codigo_producto='$id';";
 	//echo $consulta;
 	mysql_query($consulta);
+		
+//		echo $_FILES["uploadField"]["tmp_name"];
+	
+	move_uploaded_file($_FILES["photo"]["tmp_name"], "Img_prod/". $name.".jpg");
+
 
 	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 

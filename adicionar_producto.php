@@ -1,13 +1,47 @@
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
  <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
- <SCRIPT language="javascript">
-		  function validarFormulario(formulario)
-		    {
-		     return ((vacio(formulario.ci.value,"NOMBRE PRODUCTO"))&&
-		     (vacio(formulario.apellido_paterno.value,"PRECIO DEL PRODUCTO")));
-		}	
-</SCRIPT>
+
+ <SCRIPT>
+	console.log("hola");
+	
+	function validarFormulario(stock)
+	{
+		valor = document.getElementById("cantidadField").value;
+		console.log(valor);
+		returnvalue = true;
+		if( valor == null || valor.length == 0)
+		{
+			console.log("entro");
+			window.alert("debe Ingresar un numero mayor a 0");
+			return false;
+		}
+		else
+		{
+			var i=0;
+			while (i<tel.length)
+			{	
+				if ((tel.charAt(i)>='0') && (tel.charAt(i)<='9'))
+				i=i+1;
+				else
+				{
+					alert("La cantidad debe ser numeral");
+					return false;
+				}
+			}
+			
+		}
+
+		if( valor > stock)
+		{
+			alert("La cantidad no puede ser mayor del stock existente" + stock);
+			return false;
+		}
+
+		
+	 }
+</script>
+
 
  <style type="text/css">
 <!--
@@ -36,18 +70,10 @@
 	
 	}
 
-echo ' 
 
-<br>
-<table width="100%" align="center" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-      <td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
-<td>
+echo '<div><form action="adicionar_producto2.php?cod='.$registro["codigo_producto"].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario('.$registro['stock'].');>';
 
-<form action="adicionar_producto2.php?cod='.$registro['codigo_producto'].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario(this);">
-
-<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
+echo '<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
             <tr> 
               <td colspan="4"  class="title Estilo1">INFORMACI&Oacute;N PRODUCTO</td>
             </tr>
@@ -83,7 +109,7 @@ echo '
             </tr>
 			<tr> 
               <td height="27"class="campotablas">Ingresar Cantidad de productos:</td>
-              <td class="campotablas"><input type="text" name="cantidad" maxlength="20" tabindex="2" class="Formulario" value="0"> </td>
+              <td class="campotablas"><input id="cantidadField" type="text" name="cantidad" maxlength="20" tabindex="2" class="Formulario" value="0"> </td>
               <td class="campotablas">&nbsp;</td>
               <td class="campotablas">&nbsp;</td>
             </tr>
@@ -122,7 +148,7 @@ echo '
 <td class="border-bmain"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"><img src="Img_prod/'.$registro['imagen1'].'" width="400" height="300"></td>
 <td class="border-bright"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
 </table>
-
+</div>
   <br>
 
  </body>

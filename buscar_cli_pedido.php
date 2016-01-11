@@ -1,16 +1,46 @@
 <?php
 
-if(!empty($_POST['buscar']))
-{
+$newvar = false;
 
+if(empty($_POST['buscar']))
+{
+	$newvar = false;
+}
+else
+{
 	$tipo=$_POST['menu1'];
 	$var=$_POST['buscar'];
+	$newvar = true;
+	//echo "entro";
+}
+if(empty($_GET['buscar']))
+{
+	if($newvar == true)
+	{
+		
+	}
+	else
+	{
+		$newvar = false;
+	}
+}
+else
+{
+	$tipo=$_GET['menu1'];
+	$var=$_GET['buscar'];
+	//echo $tipo;
+	$newvar = true;
+}
+
+if($newvar == true)
+{
+
 	$id_pedido=$_GET['id_pedido'];
 	$id_cliente=$_GET['id_cliente'];
 	require_once("manejomysql.php");
 	conectar_bd();
-	
-	if($tipo == 'Codigo de producto')
+		
+	if($tipo == 'Codigo de producto' || $tipo == 1)
 	{
 		$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, precio_unitario_prod, stock, marca, industria from producto order by codigo_producto;");
 	
@@ -58,20 +88,24 @@ if(!empty($_POST['buscar']))
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto.php?menu1=1&buscar=".$registro['codigo_producto']." TARGET='_blanc'>Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
+
+
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
 					
 			}
 			echo "</table>";
+			
 
 		}
 		
 	}
 
-	if($tipo == 'Nombre de Producto')
+	if($tipo == 'Nombre de Producto' || $tipo == 2)
 	{
 		$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, precio_unitario_prod, stock, marca, industria from producto order by nombre_producto;");
 	
@@ -95,6 +129,7 @@ if(!empty($_POST['buscar']))
 			<td class="campotablasSP2" >Marca</td>
 			<td class="campotablasSP2" >Industria</td>
 			<td class="campotablasSP2" >Detalles</td>
+			<td class="campotablasSP2" >Adicionar Producto</td>
 			</tr>';
 		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -118,7 +153,9 @@ if(!empty($_POST['buscar']))
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto.php?menu1=1&buscar=".$registro['codigo_producto'].">Mas Detalles</a></td>
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&buscar=".$var."&menu1=2>Mas Detalles</a></td>
+					
+
 					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
@@ -126,13 +163,15 @@ if(!empty($_POST['buscar']))
 					
 			}
 			echo "</table>";
+			
+
 
 		}
 		
 	}
 
 
-		if($tipo == 'Marca')
+		if($tipo == 'Marca' || $tipo == 3)
 	{
 		$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, precio_unitario_prod, stock, marca, industria from producto order by marca;");
 	
@@ -156,6 +195,7 @@ if(!empty($_POST['buscar']))
 			<td class="campotablasSP2" >Marca</td>
 			<td class="campotablasSP2" >Industria</td>
 			<td class="campotablasSP2" >Detalles</td>
+			<td class="campotablasSP2" >Adicionar Producto</td>
 			</tr>';
 		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -179,8 +219,8 @@ if(!empty($_POST['buscar']))
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto.php?menu1=1&buscar=".$registro['codigo_producto'].">Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=3&buscar=".$var.">Mas Detalles</a></td>
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -192,7 +232,7 @@ if(!empty($_POST['buscar']))
 		
 	}
 
-		if($tipo == 'Industria')
+		if($tipo == 'Industria' || $tipo == 4)
 	{
 		$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, precio_unitario_prod, stock, marca, industria from producto order by Industria;");
 	
@@ -239,8 +279,9 @@ if(!empty($_POST['buscar']))
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto.php?menu1=1&buscar=".$registro['codigo_producto'].">Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=4&buscar=".$var.">Mas Detalles</a></td>
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
 				
 					echo "</tr>";
 						
@@ -254,7 +295,7 @@ if(!empty($_POST['buscar']))
 	}
 
 
-		if($tipo == 'Observaciones')
+		if($tipo == 'Observaciones' || $tipo == 5)
 	{
 		$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, precio_unitario_prod, stock, marca, industria, observaciones_producto from producto order by Industria;");
 	
@@ -303,8 +344,8 @@ if(!empty($_POST['buscar']))
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['observaciones_producto']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto.php?menu1=1&buscar=".$registro['codigo_producto'].">Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=5&buscar=".$var.">Mas Detalles</a></td>
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -514,13 +555,7 @@ if(!empty($_POST['buscar']))
 	}
 	
 }
-  
-  else
-  {
-  	header ("Location:buscar_cliente.php?error=1");
-	exit;
-  }
-  
+   
   
 ?>  
   

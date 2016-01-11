@@ -161,8 +161,9 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
     <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Ver Pedidos Saldo</td>
 	<td class="campotablasSP2" >Pedidos adeudados</td>
-	<td class="campotablasSP2" >Detalles</td>
+	<td class="campotablasSP2" >Continuar con Pedido</td>
   	</tr>';
 		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -198,8 +199,17 @@ if(!empty($_POST['buscar']))
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
-				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>";
+				if($saldo > 0)
+				{
+					echo "				<td class='campotablas'><a href=ver_pedidossaldo2.php?id_cliente=".$registro['codigo_cliente']." target='_blank'>Ver Pedidos saldo</a></td>";
+				}
+				else
+				{
+					echo "<td class='campotablas'>Cliente no tiene deudas</td>";
+				}
+			
+				echo "<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						
@@ -248,10 +258,10 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
     <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Ver Pedidos Saldo</td>
 	<td class="campotablasSP2" >Pedidos adeudados</td>
-	<td class="campotablasSP2" >Detalles</td>
-  	</tr>';
-		
+	<td class="campotablasSP2" >Continuar con Pedido</td>
+  	</tr>';		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 			{
 				$registro= sacar_registro_bd($usuario_consulta);
@@ -285,8 +295,17 @@ if(!empty($_POST['buscar']))
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
-				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>";
+				if($saldo > 0)
+				{
+					echo "				<td class='campotablas'><a href=ver_pedidossaldo2.php?id_cliente=".$registro['codigo_cliente']." target='_blank'>Ver Pedidos saldo</a></td>";
+				}
+				else
+				{
+					echo "<td class='campotablas'>Cliente no tiene deudas</td>";
+				}
+			
+				echo "<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						
@@ -344,8 +363,9 @@ if(!empty($_POST['buscar']))
     <td class="campotablasSP2" >Direccion </td>
     <td class="campotablasSP2" >Telefono</td>
     <td class="campotablasSP2" >Deuda Cliente</td>
+	<td class="campotablasSP2" >Ver Pedidos Saldo</td>
 	<td class="campotablasSP2" >Pedidos adeudados</td>
-	<td class="campotablasSP2" >Detalles</td>
+	<td class="campotablasSP2" >Continuar con Pedido</td>
   	</tr>';
 		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -380,8 +400,17 @@ if(!empty($_POST['buscar']))
     			<td  class='campotablasSP'>&nbsp;".$registro['nombre_cliente']."</td>
     			<td  class='campotablasSP'>&nbsp;".$registro['direccion_cliente']." </td>
     			<td  class='campotablasSP'>&nbsp;".$registro['telefono_cliente']."</td>
-    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>
-				<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
+    			<td  class='campotablasSP'>&nbsp;<font color='red'>".$saldo." Bs.</font></td>";
+				if($saldo > 0)
+				{
+					echo "				<td class='campotablas'><a href=ver_pedidossaldo2.php?id_cliente=".$registro['codigo_cliente']." target='_blank'>Ver Pedidos saldo</a></td>";
+				}
+				else
+				{
+					echo "<td class='campotablas'>Cliente no tiene deudas</td>";
+				}
+			
+				echo "<td  class='campotablasSP'>&nbsp;".$countPedidos."</td>
     			<td class='campotablas'><a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$registro['codigo_cliente'].">Realizar Pedido</a></td>";
 		echo "</tr>";
 						
