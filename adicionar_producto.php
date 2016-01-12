@@ -7,13 +7,22 @@
 	
 	function validarFormulario(stock)
 	{
-		valor = document.getElementById("cantidadField").value;
+		var valor = document.getElementById("cantidadField").value;
 		console.log(valor);
-		returnvalue = true;
+		console.log(stock);
 		if( valor == null || valor.length == 0)
 		{
 			console.log("entro");
 			window.alert("debe Ingresar un numero mayor a 0");
+			return false;
+		}
+
+		console.log("second method");
+		if( valor > parseInt(stock))
+		{
+			console.log("entro valor");
+
+			alert("La cantidad no puede ser mayor del stock existente");
 			return false;
 		}
 		else
@@ -32,25 +41,11 @@
 			
 		}
 
-		if( valor > stock)
-		{
-			alert("La cantidad no puede ser mayor del stock existente" + stock);
-			return false;
-		}
 
 		
 	 }
 </script>
 
-
- <style type="text/css">
-<!--
-.Estilo1 {
-	color: #000033
-}
--->
- </style>
- <body background="body2.jpg">
 
  <?PHP
  
@@ -71,11 +66,11 @@
 	}
 
 
-echo '<div><form action="adicionar_producto2.php?cod='.$registro["codigo_producto"].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario('.$registro['stock'].');>';
+echo '<div><form action="adicionar_producto2.php?cod='.$registro["codigo_producto"].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario('.$registro['stock'].');">';
 
-echo '<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
+echo '<table width="80%"  border="0" align="center">
             <tr> 
-              <td colspan="4"  class="title Estilo1">INFORMACI&Oacute;N PRODUCTO</td>
+              <td colspan="4">INFORMACI&Oacute;N PRODUCTO</td>
             </tr>
             <tr> 
               <td width="25%" class="campotablas">Codigo Producto:</td>
@@ -124,13 +119,7 @@ echo '<table width="100%"  border="0" align="center" cellpadding="0" cellspacing
     </tr>
   </table>
 
-<table width="100%" align="center" cellpadding="0" cellspacing="0">
-<tbody>
-<tr>
-<td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
-<td>
-
-<center>
+<br>
 <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
     <tr> 
               <td width="32%" height="24"  class="title" >DESCRIPCION DEL PRODUCTO</td>
@@ -143,7 +132,7 @@ echo '<table width="100%"  border="0" align="center" cellpadding="0" cellspacing
 
 
 <table width="42%" align="center" cellpadding="0" cellspacing="0">
-<tbody><tr>
+<tr>
 <td class="border-bleft" width="18"></td>
 <td class="border-bmain"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"><img src="Img_prod/'.$registro['imagen1'].'" width="400" height="300"></td>
 <td class="border-bright"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
