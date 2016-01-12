@@ -171,8 +171,11 @@ $querydatosuser = sacar_registro_bd($consultauser);
     <tr> 
       <td colspan="6" class="campotablasSP">Total Bs.</td>
       <td class="campotablasSP2"><div align="center">&nbsp;'.$mont['p'].'</div></td>
-    </tr>
-    <tr>
+    </tr>';
+    
+	if ($montosaldo > 0)
+	{
+	echo '<tr>
     <td colspan="6" class="campotablasSP">A Cuenta:</td>
     <td class="campotablasSP2"><div align="center">'.$montosaldo.'</td>
     </tr>
@@ -181,10 +184,17 @@ $querydatosuser = sacar_registro_bd($consultauser);
     <td class="campotablasSP2" ><div align="center">';
 	
 	$total_saldo=$montosaldo - $mont['p'];
+	if($total_saldo < 0)
+	{
+		$total_saldo=0;
+	}
+
 	echo $total_saldo; 
 	echo '</div></td>
-    </tr>
-        <tr>
+    </tr>';
+	
+	}
+        echo '<tr>
     <td colspan="1" class="campotablasSP">Vendido por:</td>
     <td colspan="6" class="campotablasSP">';
 	echo $querydatosuser['nombre'].' '.$querydatosuser['apellidoP'].' '.$querydatosuser['apellidoM'];
