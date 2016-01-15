@@ -25,8 +25,10 @@ if (mysql_num_rows($usuario_consulta) != 0)
 	$objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Codigo')
             ->setCellValue('B1', 'Detalle')
-			->setCellValue('C1', 'QTY')
-            ->setCellValue('D1', 'UNIT');
+            ->setCellValue('C1', 'Nombre Ingles')
+            ->setCellValue('D1', 'Nombre Chino')
+			->setCellValue('E1', 'QTY')
+            ->setCellValue('F1', 'UNIT');
 			
 	for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 	{
@@ -35,8 +37,10 @@ if (mysql_num_rows($usuario_consulta) != 0)
 				$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$j, $registro['codigo_producto'])
 					->setCellValue('B'.$j, $registro['nombre_producto'])
-					->setCellValue('C'.$j, $registro['stock'])
-					->setCellValue('D'.$j, $registro['unidad']);
+					->setCellValue('C'.$j, $registro['nombre_ingles'])
+					->setCellValue('D'.$j, $registro['nombre_chino'])
+					->setCellValue('E'.$j, $registro['stock'])
+					->setCellValue('F'.$j, $registro['unidad']);
 
 	}
 	
