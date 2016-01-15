@@ -88,7 +88,7 @@
 						<br>
 						<li><a href="cancelar_entregaP.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Cancelar Pedido Registrado</span>
+                            <span class="title">Eliminar Pedido Registrado</span>
                         </a></li>
 						<br>
 

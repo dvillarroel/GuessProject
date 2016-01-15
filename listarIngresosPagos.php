@@ -473,7 +473,16 @@
 							<td class='campotablas'>Saldo por Cobrar de Pedidos Registrados en el periodo seleccionado:</td>
 							<td class='campotablas'><font color="red"><?php echo $totalPedidosSaldo; ?> Bs.</font></td>
 						</tr>
-					
+						<?php
+							if($totalPedidosSaldo > 0)
+							{
+								echo "						<tr> 
+							<td class='campotablas' colspan='2'><a href=listar_clientesdeudores2.php>Ver Clientes deudores</a></td>
+						</tr>
+								
+								";
+							}
+						?>
 						<tr> 
 							<td class='campotablas'>Ingresos por Pago de pedidos registrados anteriormente:</td>
 							<td class='campotablas'><font color="green"><?php echo $totalPedidosanteriores; ?> Bs.</font></td>

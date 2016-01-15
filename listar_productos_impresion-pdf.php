@@ -28,10 +28,12 @@ echo'<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
 	echo '<table width="100%" border="0" cellpadding="0" cellspacing="0">
   	<tr>
-    <td class="title" width="25%">Codigo</td>
-    <td class="title" width="30%">Detalle</td>
-    <td class="title" width="25%">QTY</td>
-    <td class="title" width="20%">UNIT</td>
+    <td class="title" >Codigo</td>
+    <td class="title" >Nombre</td>
+    <td class="title" >Nombre Ingles</td>
+    <td class="title" >Nombre Chino</td>
+    <td class="title" >QTY</td>
+    <td class="title" >UNIT</td>
   	</tr>';
 	for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 	{
@@ -41,6 +43,8 @@ echo'<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 		echo "
 				<td class='campotablas'>".$registro['codigo_producto']."</td>
     			<td class='campotablas'>".$registro['nombre_producto']."</td>
+				<td class='campotablas'>".$registro['nombre_ingles']."</td>
+				<td class='campotablas'>".$registro['nombre_chino']."</td>
     			<td class='campotablas'>";
 				
 				if($registro['stock'] < $registro['stock_minimo'] || $registro['stock'] == $registro['stock_minimo'])

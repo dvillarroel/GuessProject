@@ -40,7 +40,7 @@
 </table>
 
   <br>
-  <p align="center"><a href="cargar_producto2.php" onclick="return confirm('Seguro que quieres registrar nuevos productos en el sistema?');">REGISTRAR NUEVOS PRODUCTOS</a></p>
+  <p align="center"><a href="cargar_producto3.php" onclick="return confirm('Seguro que quieres registrar nuevos productos en el sistema?');">REGISTRAR NUEVOS PRODUCTOS</a></p>
   <br>
   <p align="center"><a href="actualizar_producto2.php" onclick="return confirm('Seguro que quieres actualizar las propiedades de todos los productos?');">ACTUALIZAR PRODUCTOS</a></p>
   <br>

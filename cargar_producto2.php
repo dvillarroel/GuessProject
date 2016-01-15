@@ -35,6 +35,7 @@ function sheetSave($sheet){
 	{
 			$codigo_producto=isset($sheet['cells'][$x1][1]) ? $sheet['cells'][$x1][1] : '';
 			$name=isset($sheet['cells'][$x1][3]) ? $sheet['cells'][$x1][3] : '';
+			echo $name;
 			$nchino='';
 			$ningles='';
 			$precio=isset($sheet['cells'][$x1][4]) ? $sheet['cells'][$x1][4] : '';
@@ -64,7 +65,7 @@ function sheetSave($sheet){
 			if(cuantos_registros_bd($queryuser) == 0 )
 			{	
 				//echo $consulta;
-				mysql_query($consulta) or die(header ("Location:registrar_producto.php?error_registro=2"));	
+				mysql_query($consulta);	
 				echo "El producto con codigo: ".$codigo_producto. "  fue resgistrado en la base de datos";
 		
 			}
