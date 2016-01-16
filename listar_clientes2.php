@@ -108,90 +108,67 @@
 </head>
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body>
+<body class="bg-steel">
    <div class="page-content2">
         <div class="flex-grid no-responsive-future" style="height: 100%;">
             <div class="row" style="height: 100%">
- 
-                <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Lista de productos:<span class="mif-search place-right"></span></h1>
-                    <hr class="thin bg-grayLighter">
-
 
 <?php
 
 require_once("manejomysql.php");
 conectar_bd();
 
-$usuario_consulta = mysql_query("SELECT codigo_producto, nombre_producto, nombre_chino, nombre_ingles,precio_unitario_prod FROM producto;" );
+$usuario_consulta = mysql_query("SELECT codigo_cliente, ci_cliente, nombre_cliente, apellido_paterno, apellido_materno, direccion_cliente, telefono_cliente, fecha_sus FROM cliente order by apellido_paterno;" );
 
 if (mysql_num_rows($usuario_consulta) != 0)
 {	
 
 echo'<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<br>
-';
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Lista de clientes<span class="mif-search place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
+						<table class="dataTable border bordered" data-role="datatable" data-auto-width="false" >
+							<thead>';
 
 	echo '
-							<table class="dataTable border bordered" data-role="datatable" data-auto-width="false" >
-							<thead>
-
   	<tr>
-    <td class="title" width="10%">Codigo Producto</td>
-    <td class="title" width="10%">Nombre Producto</td>
-    <td class="title" width="10%">Nombre Producto Chino</td>
-    <td class="title" width="10%">Nombre Producto Ingles</td>
-    <td class="title" width="20%">Precio Unitario</td>
-    <td class="title" width="20%">Modificar Producto</td>
-   	</tr>							</thead><tbody>
-';
+    <td>Codigo Cliente</td>
+    <td>C.I.</td>
+    <td>Apellidos</td>
+    <td>Nombres</td>
+    <td>Direccion </td>
+    <td>Telefono</td>
+    <td>Fecha de Suscripcion</td>
+  	</tr></thead><tbody>';
 	for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
 	{
 		$registro= sacar_registro_bd($usuario_consulta);
-		$valueCod=urlencode($registro['codigo_producto']);
-		echo '<tr>'; 
+		echo "<tr>";
 		echo "
-				<td class='campotablas'>".$registro['codigo_producto']."</td>
-    			<td class='campotablas'>".$registro['nombre_producto']."</td>
-				<td class='campotablas'>".$registro['nombre_chino']."</td>
-				<td class='campotablas'>".$registro['nombre_ingles']."</td>
-    			<td class='campotablas'>".$registro['precio_unitario_prod']."</td>
-    			<td class='campotablas'><a href=modificar_producto.php?id=".$valueCod.">Modificar </a></td>	";
+				<td class='campotablas'>".$registro['codigo_cliente']."</td>
+    			<td class='campotablas'>".$registro['ci_cliente']."</td>
+   				<td class='campotablas'>".$registro['apellido_paterno']." " .$registro['apellido_materno']."</td>
+    			<td class='campotablas'>".$registro['nombre_cliente']."</td>
+    			<td class='campotablas'>".$registro['direccion_cliente']." </td>
+    			<td class='campotablas'>".$registro['telefono_cliente']."</td>
+    			<td class='campotablas'>".$registro['fecha_sus']."</td>	";
 	
 			
 		echo "</tr>";
 	}
 	
-	echo '
-	<tbody>	</table>
- <p>&nbsp;</p>
-';
+
 	
 	
-	
-}
-else
-{
-	echo "No Existen productos Registrados";
 }
 
 
 ?>
-<script language="JavaScript" type="text/JavaScript">
-function uno(src,color_entrada) {
-		//src.bgColor=color_entrada;src.style.cursor="hand";
-}
-function dos(src,color_default) {
-		//src.bgColor=color_default;src.style.cursor="default";
-}
-</script>
 
-
-
-<p align="center"><a href="administrar_productos.php">VOLVER ATRAS</a></p>
-<p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
-
+		</tbody></table>
+		<hr class="thin bg-grayLighter">
+		<p align="center"><a href="administrar_clientes.php">VOLVER ATRAS</a></p>
 		</div>
 			</div>
 		</div>

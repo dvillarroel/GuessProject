@@ -48,7 +48,7 @@ function dos(src,color_default) {
     <td class="title" width="15%">Carnet de Identidad</td>
     <td class="title" width="15%">Telefono</td>
     <td class="title" width="15%">direccion </td>
-	<td class="title" width="10%">Estado Cliente</td>
+	<td class="title" width="10%">Estado Vendedor</td>
     <td class="title" width="15%">Dar de Baja</td>
 	 <td class="title" width="15%">Dar de Alta</td>
   	</tr>';

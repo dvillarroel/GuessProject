@@ -6,7 +6,7 @@ if(!empty($_POST['cantidad']))
 	require_once("manejomysql.php");
 	conectar_bd();
 	$cantidad=$_POST['cantidad'];
-	$cod=$_GET['cod'];
+	$cod=urldecode($_GET['cod']);
 	$id_cliente=$_GET['id_cliente'];
 	$id_pedido=$_GET['id_pedido'];
 	

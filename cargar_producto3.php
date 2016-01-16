@@ -24,8 +24,10 @@ Podria ser necesario actualizar algunos datos de todos los productos actualizado
 include 'PHPExcel/IOFactory.php';
 $objPHPExcel = PHPExcel_IOFactory::load("formato-productos.xls");
 
+
 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
     $worksheetTitle     = $worksheet->getTitle();
+	echo $worksheetTitle;
     $highestRow         = $worksheet->getHighestRow(); // e.g. 10
     $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
     $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
@@ -61,7 +63,7 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 			$observaciones=$cell11->getValue();
 			$estado='Activo';
             $cell12 = $worksheet->getCellByColumnAndRow(13,$row);
-			$imagen=$cell12->getValue();
+			$imagen=$cell->getValue().".jpg";
             $cell13 = $worksheet->getCellByColumnAndRow(14,$row);
 			$Precio_pref=$cell13->getValue();
             $cell14 = $worksheet->getCellByColumnAndRow(15,$row);

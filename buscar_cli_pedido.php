@@ -79,7 +79,7 @@ if($newvar == true)
 				}
 				else
 				{
-					
+					$valueCod=urlencode($registro['codigo_producto']);
 					echo "<tr>";
 					echo "
 					<td  class='campotablasSP'>&nbsp;".$registro['codigo_producto']."</td>
@@ -88,11 +88,11 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -145,6 +145,7 @@ if($newvar == true)
 				else
 				{
 					
+					$valueCod=urlencode($registro['codigo_producto']);
 					echo "<tr>";
 					echo "
 					<td  class='campotablasSP'>&nbsp;".$registro['codigo_producto']."</td>
@@ -153,10 +154,11 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&buscar=".$var."&menu1=2>Mas Detalles</a></td>
-					
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
+
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -211,6 +213,7 @@ if($newvar == true)
 				else
 				{
 					
+					$valueCod=urlencode($registro['codigo_producto']);
 					echo "<tr>";
 					echo "
 					<td  class='campotablasSP'>&nbsp;".$registro['codigo_producto']."</td>
@@ -219,10 +222,12 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=3&buscar=".$var.">Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
-					echo "</tr>";
-						
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
+
+
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					echo "</tr>";						
 				}	
 					
 			}
@@ -271,6 +276,7 @@ if($newvar == true)
 				else
 				{
 					
+					$valueCod=urlencode($registro['codigo_producto']);
 					echo "<tr>";
 					echo "
 					<td  class='campotablasSP'>&nbsp;".$registro['codigo_producto']."</td>
@@ -279,12 +285,12 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=4&buscar=".$var.">Mas Detalles</a></td>
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
-				
-					echo "</tr>";
-						
+
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					echo "</tr>";						
 				}	
 					
 			}
@@ -335,6 +341,7 @@ if($newvar == true)
 				else
 				{
 					
+					$valueCod=urlencode($registro['codigo_producto']);
 					echo "<tr>";
 					echo "
 					<td  class='campotablasSP'>&nbsp;".$registro['codigo_producto']."</td>
@@ -343,11 +350,12 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
-					<td  class='campotablasSP'>&nbsp;".$registro['observaciones_producto']."</td>
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=5&buscar=".$var.">Mas Detalles</a></td>
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$registro['codigo_producto']."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=".$tipo."&buscar=".$var.">Adicionar Producto</a></td>";
-					echo "</tr>";
-						
+					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
+
+
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					echo "</tr>";						
 				}	
 					
 			}

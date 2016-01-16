@@ -32,7 +32,7 @@ if( !empty($_POST['ci']) && !empty($_POST['apellido_paterno']) )
 		
 //		echo $_FILES["uploadField"]["tmp_name"];
 	
-	move_uploaded_file($_FILES["photo"]["tmp_name"], "Img_prod/". $name.".jpg");
+	move_uploaded_file($_FILES["photo"]["tmp_name"], "Img_prod/". $id.".jpg");
 
 
 	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">

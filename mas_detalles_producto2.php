@@ -20,7 +20,7 @@
 
  <?PHP
  
- 	$cod_producto=$_GET['cod_producto'];
+ 	$cod_producto=urldecode($_GET['cod_producto']);
 	$id_cliente=$_GET['id_cliente'];
 	$id_pedido=$_GET['id_pedido'];
 	$tipo= $_GET['menu1'];
@@ -79,7 +79,9 @@ echo '
 </table>
 <br>
 <br>';
-  echo '<p align="center"><a href=adicionar_producto.php?menu1=1&buscar='.$registro["codigo_producto"].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'>Adicionar Producto</a><br>';
+	
+	$valueCod=urlencode($registro['codigo_producto']);
+  echo '<p align="center"><a href=adicionar_producto.php?menu1=1&buscar='.$valueCod.'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'>Adicionar Producto</a><br>';
   
 
   echo '

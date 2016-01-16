@@ -69,6 +69,11 @@
                             <span class="mif-apps icon"></span>
                             <span class="title">Registrar Nuevo Cliente</span>
                         </a></li><br>
+						<li><a href="listar_clientes2.php" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Listar Clientes</span>
+                        </a></li><br>
+
 						<li><a href="actualizar_cliente.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
                             <span class="title">Modificar Informacion de Cliente</span>

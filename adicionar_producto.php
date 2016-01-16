@@ -1,3 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link href="jquery-ui.css" rel="stylesheet">
+	<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+	<style>
+	body{
+		font: 62.5% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+	.demoHeaders {
+		margin-top: 2em;
+	}
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+	select {
+		width: 200px;
+	}
+	</style>
+
+
+</head>
+<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
  <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
@@ -45,11 +160,14 @@
 		
 	 }
 </script>
+               <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Adicionar Producto</span></h1>
+                    <hr class="thin bg-grayLighter">
 
 
  <?PHP
  
- 	$tipo=$_GET['buscar'];
+ 	$tipo=urldecode($_GET['buscar']);
 	$id_cliente=$_GET['id_cliente'];
 	$id_pedido=$_GET['id_pedido'];
 	
@@ -65,12 +183,12 @@
 	
 	}
 
+	$valueCod = urlencode($registro["codigo_producto"]);
+echo '<div><form action="adicionar_producto2.php?cod='.$valueCod.'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario('.$registro['stock'].');">';
 
-echo '<div><form action="adicionar_producto2.php?cod='.$registro["codigo_producto"].'&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post" name="ventas" onSubmit="return validarFormulario('.$registro['stock'].');">';
-
-echo '<table width="80%"  border="0" align="center">
+echo '<br><table width="80%" align="center">
             <tr> 
-              <td colspan="4">INFORMACI&Oacute;N PRODUCTO</td>
+              <td colspan="4" align="center" >INFORMACI&Oacute;N PRODUCTO</td>
             </tr>
             <tr> 
               <td width="25%" class="campotablas">Codigo Producto:</td>
@@ -93,15 +211,8 @@ echo '<table width="80%"  border="0" align="center">
             <tr> 
               <td height="27"class="campotablas"> Stock Minimo del Producto:</td>
               <td class="campotablas">'.$registro['stock_minimo'].'</td>
-              <td class="campotablas">Precio Cliente Preferencial</td>
-              <td class="campotablas">'.$registro['preferencial'].'</td>
-            </tr>
-            <tr> 
-              <td height="27"class="campotablas">Precio Cliente Regular:</td>
-              <td class="campotablas">'.$registro['regular'].'</td>
-              <td class="campotablas">Precio Cliente Irregular:</td>
-              <td class="campotablas">'.$registro['irregular'].'</td>
-            </tr>
+              <td class="campotablas">&nbsp;</td>
+              <td class="campotablas">&nbsp;</td>
 			<tr> 
               <td height="27"class="campotablas">Ingresar Cantidad de productos:</td>
               <td class="campotablas"><input id="cantidadField" type="text" name="cantidad" maxlength="20" tabindex="2" class="Formulario" value="0"> </td>
@@ -147,3 +258,8 @@ echo '<table width="80%"  border="0" align="center">
 
 ?>
   
+  		</div>
+			</div>
+		</div>
+	</div>
+</html>
