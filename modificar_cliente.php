@@ -168,7 +168,7 @@ echo '<form action="modificar_cliente2.php?id='.$var=$_GET["id"].'" method="post
             </td>
           </tr>
           <tr> 
-              <td class="campotablas">Apellido Paterno:</td>
+              <td class="campotablas">Apellido Parterno:</td>
             <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario" value='.$ap.'> 
             </td>
               <td class="campotablas">Apellido Materno:</td>
