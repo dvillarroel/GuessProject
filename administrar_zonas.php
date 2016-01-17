@@ -63,32 +63,24 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Administrar Clientes<span class="mif-user-check place-right"></span></h1>
+                    <h1 class="text-light">Administracion Zonas<span class="mif-users place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-					<li><a href="registrar_cliente.php" target="mainFrame">
+					<li><a href="registrar_zona.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Nuevo Cliente</span>
+                            <span class="title">(+) Registrar una nueva Zona</span>
                         </a></li><br>
-						<li><a href="listar_clientes2.php" target="mainFrame">
+						<li><a href="modificar_zona.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Listar Clientes</span>
+                            <span class="title">Modificar Datos de Zona</span>
                         </a></li><br>
-
-						<li><a href="actualizar_cliente.php" target="mainFrame">
+						<li><a href="dar_baja_zona.php" target="mainFrame">
                             <span class="mif-apps icon"></span>
-                            <span class="title">Modificar Informacion de Cliente</span>
-                        </a></li><br>
-						<li><a href="eliminar_cliente.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Deshabilitar un cliente</span>
+                            <span class="title">Deshabilitar Zona</span>
                         </a></li>
-						<br>
-						<li><a href="administrar_zonas.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Administrar Zonas</span>
-                        </a></li>
-						
                     <hr class="thin bg-grayLighter">
+					<div>
+						<p align="center"><a href="Administrar_clientes.php">VOLVER ATRAS</a></p>
+					</div>
 				</div>
             </div>
 		</div>

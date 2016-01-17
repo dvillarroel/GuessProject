@@ -56,6 +56,8 @@
             })
         })
     </script>
+
+	
 </head>
 <body class="bg-steel">
    <div class="page-content2">
@@ -63,33 +65,39 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Administrar Clientes<span class="mif-user-check place-right"></span></h1>
+                    <h1 class="text-light">Registro de Nueva Zona<span class="mif-users place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-					<li><a href="registrar_cliente.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Nuevo Cliente</span>
-                        </a></li><br>
-						<li><a href="listar_clientes2.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Listar Clientes</span>
-                        </a></li><br>
+<?php
 
-						<li><a href="actualizar_cliente.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Modificar Informacion de Cliente</span>
-                        </a></li><br>
-						<li><a href="eliminar_cliente.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Deshabilitar un cliente</span>
-                        </a></li>
-						<br>
-						<li><a href="administrar_zonas.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Administrar Zonas</span>
-                        </a></li>
-						
-                    <hr class="thin bg-grayLighter">
-				</div>
+
+	require_once("manejomysql.php");
+	conectar_bd();
+	$codigo_cliente=$_POST['codigo_cliente'];
+	$ci=$_POST['ci'];
+	//$estado='activo';
+	
+	$consulta="insert into zona values($codigo_cliente, '$ci')";
+	mysql_query($consulta);
+
+	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+
+	<body background="body2.jpg">';
+
+	echo'<font color="blue">
+La zona se registro correctamente, Esta puede ser asignado a clientes. </font>
+
+<br>';
+
+echo "<a href=administrar_zonas.php>Volver a Administrar Zonas</a>";
+echo '<br>
+';
+
+
+?>
+
+
+
+	</div>
             </div>
 		</div>
 	</div>
