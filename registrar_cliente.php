@@ -1,11 +1,73 @@
-<?php 
-echo '<title> REGISTRAR CLIENTE</title>';
-?> 
+<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
+
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
+
+    <script src="docs/js/metro.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+</head>
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+ 
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Registrar Nuevo Cliente<span class="mif-users place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
 
 <link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
 
-<body background="body2.jpg">
- 
  <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
  <SCRIPT language="javascript">
 
@@ -25,34 +87,17 @@ echo '<title> REGISTRAR CLIENTE</title>';
  
 
 <br>
-<table width="40%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td class="panel-titulo2"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-    <td class="panel-titulo3" align="center">&nbsp;</td>
-	<td class="panel-titulo3" width="100%" align="center"><font class="titulo_formulario">FORMULARIO 
-      DE REGISTRO DE CLIENTES</font></td>
-    <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-  </tr>
-</table>
-<form action="registrar_cliente2.php" method="post" name="ventas" onSubmit="return validarFormulario(this);">
 
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr> 
-      <td height="31" ></td>
-      <td ></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+<form action="registrar_cliente2.php" method="post" name="ventas" onSubmit="return validarFormulario();">
+
 
 <table width="100%" align="center" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
-      <td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
+      
 <td>
 
-<table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFCC" bgcolor="#E4E4E4" style="TABLE-LAYOUT: fixed">
+<table width="70%" align="center">
           <tr> 
               <td colspan="4"  class="title">INFORMACI&Oacute;N CLIENTE</td>
           </tr>
@@ -74,17 +119,17 @@ echo '<title> REGISTRAR CLIENTE</title>';
 			
 			echo ' <input type="text" name="codigo_cliente" maxlength="15" readonly="true" tabindex="1" class="Formulario" value='.$nc.'>'; ?>            </td>
               <td width="25%" class="campotablas">Nombre Cliente o Empresa:</td>
-            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario">            </td>
+            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario" autofocus>            </td>
           </tr>
           <tr> 
-              <td class="campotablas">Apellidos:</td>
+              <td class="campotablas">Apellido Paterno:</td>
             <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario">            </td>
-              <td class="campotablas">CI &oacute; NIT:</td>
+              <td class="campotablas">Apellido Materno:</td>
             <td class="campotablas"><input name="apellido_materno" type="text" class="Formulario" tabindex="4" maxlength="17"  >            </td>
           </tr>
 		  
 		  <tr> 
-              <td height="27"class="campotablas">Telefono:</td>
+              <td height="27"class="campotablas">CI &oacute; NIT:</td>
             <td class="campotablas"> <input type="text" name="nombres"  maxlength="25" tabindex="5" class="Formulario">            </td>
               <td class="campotablas">Direccion:</td>
             <td class="campotablas"><input type="text" name="direccion" maxlength="255" tabindex="6" class="Formulario">            </td>
@@ -102,19 +147,27 @@ echo '<title> REGISTRAR CLIENTE</title>';
           <tr>
             <td class="campotablas">Seleccionar Zona:</td>
             <td class="campotablas"><label>
-              <select name="1" id="1">
-                    <option selected>Cercado</option>
-      <option>Quillacollo</option>
-      <option>Tiquipaya</option>
-      <option>Sacaba</option>
+              <select name="1" id="1" tabindex="9">
+				<?php
+					$zonas= consulta_bd("SELECT id, nombre_zona FROM zona" );
+									
+					for ( $i=0; $i< cuantos_registros_bd($zonas); $i++)
+					{
+						
+						$zonasResult=sacar_registro_bd($zonas);
+						echo '<option id='.$zonasResult["id"].'>'.$zonasResult["nombre_zona"].'</option>';
+					}
+
+				
+				?>
                 </select>
             </label></td>
-            <td class="campotablas">Descuento Cliente %</td>
-            <td class="campotablas"><input name="direccion2" type="text" class="Formulario" tabindex="6" value="0" maxlength="255"></td>
+            <td class="campotablas">Telefono:</td>
+            <td class="campotablas"><input name="direccion2" type="text" class="Formulario" tabindex="10" value="0" maxlength="255"></td>
           </tr>
           <tr>
             <td class="campotablas">Tipo de Cliente</td>
-            <td class="campotablas"><select name="12" id="12">
+            <td class="campotablas"><select name="12" id="12" tabindex="11">
               <option>Preferencial</option>
               <option>Regular</option>
               <option>Irregular</option>
@@ -187,31 +240,7 @@ echo '<title> REGISTRAR CLIENTE</title>';
     </tr>
   </table>
   
-  
-  <?php 
-  if( !empty($_GET['error_registro']) )
-{
-	$respuesta=null;
-	if($_GET['error_registro'] == 1)
-	{
-		$respuesta='TIENE QUE LLENAR TODOS LOS CAMPOS QUE SON NECESARIOS';
-	}
-		
-	echo '<br><br><table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">'.$respuesta.'</font></td>
-  		</tr>
-	</table>';
 
-
-}
-
-					
-
-  
-  
-  ?>
-  
  
 <p>
   <script language="JavaScript">
@@ -224,3 +253,11 @@ echo '<title> REGISTRAR CLIENTE</title>';
 		</script>
 </p>
 <p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
+
+
+</div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>

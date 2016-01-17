@@ -56,6 +56,8 @@
             })
         })
     </script>
+
+	
 </head>
 <body class="bg-steel">
    <div class="page-content2">
@@ -63,21 +65,40 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Administracion Zonas<span class="mif-users place-right"></span></h1>
+                    <h1 class="text-light">Modificar Zona<span class="mif-users place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-					<li><a href="registrar_zona.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">(+) Registrar una nueva Zona</span>
-                        </a></li><br>
-						<li><a href="modificar_zona.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Modificar Datos de Zona</span>
-                        </a></li><br>
-					<hr class="thin bg-grayLighter">
-					<div>
-						<p align="center"><a href="Administrar_clientes.php">VOLVER ATRAS</a></p>
-					</div>
-				</div>
+<?php
+
+
+	require_once("manejomysql.php");
+	conectar_bd();
+	$codigo_cliente=$_POST['codigo_cliente'];
+	$ci=$_POST['ci'];
+	//$estado='activo';
+	
+	$consulta="update zona set nombre_zona='$ci' where id=$codigo_cliente";
+	//echo $consulta;
+	mysql_query($consulta);
+
+	echo '<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+
+	<body background="body2.jpg">';
+
+	echo'<font color="blue">
+La zona se actualizo correctamente, Esta se reflejara en la informacion de los clientes que tienen asignado esta zona y estara disponible para el registro de nuevos usuarios. </font>
+
+<br>';
+
+echo "<a href=administrar_zonas.php>Volver a Administrar Zonas</a>";
+echo '<br>
+';
+
+
+?>
+
+
+
+	</div>
             </div>
 		</div>
 	</div>
