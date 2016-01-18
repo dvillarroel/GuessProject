@@ -84,7 +84,113 @@
 	newWindow = window.open(urlstring,'','height=200,width=280,toolbar=no,minimize=no,status=no,memubar=no,location=no,scrollbars=no')
   }
  </script>
- 
+ 	 <script>
+	console.log("function javascript");
+
+	function validarFormulario()
+	{
+		valor = document.getElementById("nombreField").value;
+		id = document.getElementById("ciField").value;
+		ap = document.getElementById("apField").value;
+		am = document.getElementById("amField").value;
+		username = document.getElementById("username").value;
+		pwd_1= document.getElementById("password1").value;
+		pwd_2= document.getElementById("password2").value;
+		tel= document.getElementById("telf").value;
+
+		
+		console.log(valor);
+		returnvalue = true;
+
+				if( valor == null || valor.length == 0)
+		{
+			console.log("entro");
+			window.alert("El Nombre no puede estar vacio");
+			return false;
+		}
+		
+		if( id == null || id.length == 0)
+		{
+			console.log("entro");
+			alert("El CI no puede estar vacio");
+			return false;
+		}
+		else
+		{
+			var i=0;
+			while (i<id.length)
+			{	
+				if ((id.charAt(i)>='0') && (id.charAt(i)<='9'))
+				i=i+1;
+				else
+				{
+					alert("El CI tiene que ser numeral de 7 digitos");
+					return false;
+				}
+			}
+			
+		}
+
+		if( tel == null || tel.length == 0)
+		{
+			console.log("entro");
+			alert("El telefono no puede estar vacio");
+			return false;
+		}
+		else
+		{
+			var i=0;
+			while (i<tel.length)
+			{	
+				if ((tel.charAt(i)>='0') && (tel.charAt(i)<='9'))
+				i=i+1;
+				else
+				{
+					alert("El telefono tiene que ser numeral");
+					return false;
+				}
+			}
+			
+		}
+
+		
+		if( ap == null || ap.length == 0)
+		{
+			alert("El Apellido Paterno no puede estar vacio");
+			return false;
+		}
+		if( username == null || username.length == 0)
+		{
+			alert("El nombre de usuario no puede estar vacio");
+			return false;
+		}
+
+				if( pwd_1 == null || pwd_2.length == 0)
+		{
+			alert("El password no puede esta vacio");
+			return false;
+		}
+		else
+		{	
+			if( pwd_1 != pwd_2)
+			{
+				alert("El password no coinciden");
+				return false;
+
+			}
+			
+		}
+
+		if( username == null || username.length == 0)
+		{
+			alert("El nombre de usuario no puede estar vacio");
+			return false;
+		}
+
+		
+	 }
+</script>
+
 
 <br>
 
@@ -119,25 +225,25 @@
 			
 			echo ' <input type="text" name="codigo_cliente" maxlength="15" readonly="true" tabindex="1" class="Formulario" value='.$nc.'>'; ?>            </td>
               <td width="25%" class="campotablas">Nombre Cliente o Empresa:</td>
-            <td width="25%" class="campotablas"><input type="text" name="ci" maxlength="20" tabindex="2" class="Formulario" autofocus>            </td>
+            <td width="25%" class="campotablas"><input type="text" id="nameField" name="ci" maxlength="20" tabindex="2" class="Formulario" autofocus>            </td>
           </tr>
           <tr> 
               <td class="campotablas">Apellido Paterno:</td>
-            <td class="campotablas"><input type="text" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario">            </td>
+            <td class="campotablas"><input type="text" id="apfield" name="apellido_paterno" maxlength="15" tabindex="3" class="Formulario">            </td>
               <td class="campotablas">Apellido Materno:</td>
-            <td class="campotablas"><input name="apellido_materno" type="text" class="Formulario" tabindex="4" maxlength="17"  >            </td>
+            <td class="campotablas"><input name="apellido_materno" id="amfield" type="text" class="Formulario" tabindex="4" maxlength="17"  >            </td>
           </tr>
 		  
 		  <tr> 
               <td height="27"class="campotablas">CI &oacute; NIT:</td>
-            <td class="campotablas"> <input type="text" name="nombres"  maxlength="25" tabindex="5" class="Formulario">            </td>
+            <td class="campotablas"> <input type="text" name="nombres" id="cifield" maxlength="25" tabindex="5" class="Formulario">            </td>
               <td class="campotablas">Direccion:</td>
-            <td class="campotablas"><input type="text" name="direccion" maxlength="255" tabindex="6" class="Formulario">            </td>
+            <td class="campotablas"><input type="text" name="direccion" id="dirfield" maxlength="255" tabindex="6" class="Formulario">            </td>
           </tr>
           
           <tr> 
               <td class="campotablas">Correo Electronico:</td>
-            <td class="campotablas"><input name="telefono" type="text" class="Formulario" tabindex="7" value="test@hotmail.com"  maxlength="45"></td>
+            <td class="campotablas"><input name="telefono" type="text" id="mailField" class="Formulario" tabindex="7" value="test@hotmail.com"  maxlength="45"></td>
               <td class="campotablas">Fecha de Registro:</td>
            <td class="campotablas"> 
 			<input type="text" name="correo_electronico" id="correo_electronico" maxlength="20" tabindex="8" class="Formulario" value=<?php echo $fecha ?> readonly />
@@ -147,7 +253,7 @@
           <tr>
             <td class="campotablas">Seleccionar Zona:</td>
             <td class="campotablas"><label>
-              <select name="1" id="1" tabindex="9">
+              <select name="1" id="1" tabindex="9" >
 				<?php
 					$zonas= consulta_bd("SELECT id, nombre_zona FROM zona" );
 									
@@ -163,7 +269,7 @@
                 </select>
             </label></td>
             <td class="campotablas">Telefono:</td>
-            <td class="campotablas"><input name="direccion2" type="text" class="Formulario" tabindex="10" value="0" maxlength="255"></td>
+            <td class="campotablas"><input name="direccion2" id="telfield" type="text" class="Formulario" tabindex="10" value="0" maxlength="255"></td>
           </tr>
           <tr>
             <td class="campotablas">Tipo de Cliente</td>
@@ -204,7 +310,7 @@
 <table width="100%" align="center" cellpadding="0" cellspacing="0">
 <tbody>
 <tr>
-<td class="border-left"><img src="../news.php_files/blank.gif" alt="" style="display: block;" height="1"></td>
+
 <td>
 
 <center>
