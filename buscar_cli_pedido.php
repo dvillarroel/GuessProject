@@ -15,7 +15,23 @@ function enable(id)
 
 </script>  
   
+ <link rel="stylesheet" href="bootstrap.css">
+  <script src="jquery.js"></script>
+  <script src="bootstrap.js"></script>
 
+<link rel="stylesheet" href="colorbox.css" />
+<script src="jquery2.js"></script>
+<script src="jquery.colorbox.js"></script>
+<script>
+			$(document).ready(function(){
+				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+				//Example of preserving a JavaScript event for inline calls.
+				$("#click").click(function(){ 
+					$('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+					return false;
+				});
+			});
+		</script>
 
 
 <?php
@@ -139,6 +155,14 @@ if($newvar == true)
 			<div>
 				<form action="adicionar_multiplesproductos.php?cod='.$numeroconsulta.'&menu1=1&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post">
 			';
+			
+			echo '<div class="container">
+
+  <!-- Trigger the modal with a button -->
+
+
+
+';
 
 			echo '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
   			<tr>
@@ -184,7 +208,9 @@ if($newvar == true)
 					<?php
 					echo "Seleccionar</td><td class='campotablasSP'><input type='number' name='number".$i."' min='1' max='".$registro['stock']."' value='0' id='number".$i."' disabled></td>
 					
-					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
+					<td class='campotablas'>";
+	
+					echo "<a href=mas_detalles_producto3.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var." class='iframe'>Mas Detalles</a></td>
 
 
 
@@ -196,6 +222,29 @@ if($newvar == true)
 					
 			}
 			echo "</table>";
+			
+			echo '  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>';
 			
 
 
