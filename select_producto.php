@@ -87,6 +87,12 @@
   </tr>
 </table>
 </form>
+
+<?php
+	echo'<p align="center"><font color="green"><a href=buscar_cli_pedidoAll.php?id_cliente='.$cliente.'&id_pedido='.$pedido.'">TODOS LOS PRODUCTOS </a></font></p>';
+	
+?>
+
 <p>&nbsp;</p>
 <p align="center">
 <?php echo "<a href=buscar_cliente_pedido2.php?menu1=1&buscar=".$cliente." >VOLVER ATRAS</a></p>"; ?>

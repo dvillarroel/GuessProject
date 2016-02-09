@@ -15,8 +15,6 @@
  	$cod_producto=urldecode($_GET['cod_producto']);
 	$id_cliente=$_GET['id_cliente'];
 	$id_pedido=$_GET['id_pedido'];
-	$tipo= $_GET['menu1'];
-	$var = $_GET['buscar'];
 	
 	require_once("manejomysql.php");
 	conectar_bd();
