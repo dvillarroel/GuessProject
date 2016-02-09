@@ -1,3 +1,6 @@
+<html>
+	<head>
+		<meta charset='utf-8'/>
 <script>
 function enable(id)
 {
@@ -14,14 +17,16 @@ function enable(id)
 }
 
 </script>  
-  
- <link rel="stylesheet" href="bootstrap.css">
-  <script src="jquery.js"></script>
-  <script src="bootstrap.js"></script>
 
 <link rel="stylesheet" href="colorbox.css" />
 <script src="jquery2.js"></script>
-<script src="jquery.colorbox.js"></script>
+<script src="jquerycolorbox.js"></script>
+<style>
+			body{font:12px/1.2 Verdana, sans-serif; padding:0 10px;}
+			a:link, a:visited{text-decoration:none; color:#416CE5; border-bottom:1px solid #416CE5;}
+			h2{font-size:13px; margin:15px 0 0 0;}
+</style>
+
 <script>
 			$(document).ready(function(){
 				$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
@@ -32,7 +37,8 @@ function enable(id)
 				});
 			});
 		</script>
-
+	</head>
+	<body>
 
 <?php
 
@@ -156,13 +162,6 @@ if($newvar == true)
 				<form action="adicionar_multiplesproductos.php?cod='.$numeroconsulta.'&menu1=1&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post">
 			';
 			
-			echo '<div class="container">
-
-  <!-- Trigger the modal with a button -->
-
-
-
-';
 
 			echo '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
   			<tr>
@@ -210,7 +209,7 @@ if($newvar == true)
 					
 					<td class='campotablas'>";
 	
-					echo "<a href=mas_detalles_producto3.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var." class='iframe'>Mas Detalles</a></td>
+					echo "<a class='iframe' href='mas_detalles_producto3.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var."' >Mas Detalles</a></td>
 
 
 
@@ -223,28 +222,6 @@ if($newvar == true)
 			}
 			echo "</table>";
 			
-			echo '  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>';
 			
 
 
@@ -254,10 +231,10 @@ if($newvar == true)
     <tr>
       <td align="center">
 	  <input name="image"  type="image" onMouseOver= src="images/r2.gif" onMouseMove= src="images/r2.gif" onMouseOut=src="images/r1.gif" value="" SRC="images/r1.gif"> </td></form>
-      <form action="principal_target.php" method="post"><td align="center"><input name="cancelar"  type="image" onMouseOver= src="images/c2.gif" onMouseMove= src="images/c2.gif" onMouseOut=src="images/c1.gif" value="" SRC="images/c1.gif"> </td> </form>
+      <form action="buscar_cliente_pedido2.php?menu1=1&buscar='.$id_cliente.'" method="post"><td align="center"><input name="cancelar"  type="image" onMouseOver= src="images/c2.gif" onMouseMove= src="images/c2.gif" onMouseOut=src="images/c1.gif" value="" SRC="images/c1.gif"> </td> </form>
     </tr>
   </table>
-</div>
+
 ';
 		
 		
@@ -657,12 +634,5 @@ if($newvar == true)
    
   
 ?>  
-
-
-
-  
-<p>&nbsp;</p>
-
-<p>&nbsp;</p>
 </body>
 </html>
