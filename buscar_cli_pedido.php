@@ -1,3 +1,23 @@
+<script>
+function enable(id)
+{
+	console.log(id);
+	
+	if(document.getElementById("check"+id.toString()).checked==true){
+	document.getElementById("number"+id.toString()).disabled=false;
+	document.getElementById("number"+id.toString()).focus();
+	}
+	else{
+	document.getElementById("number"+id.toString()).disabled=true;
+	}
+		
+}
+
+</script>  
+  
+
+
+
 <?php
 
 $newvar = false;
@@ -49,7 +69,6 @@ if($newvar == true)
 			echo '
 					
 			<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-			<body background="body2.jpg">
 			<p>PRODUCTOS ENCONTRATOS</p>
 			<form action="registrar_cliente2.php" method="post">
 
@@ -92,7 +111,7 @@ if($newvar == true)
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -111,13 +130,14 @@ if($newvar == true)
 	
 		if (mysql_num_rows($usuario_consulta) != 0)
 		{
+			$numeroconsulta=mysql_num_rows($usuario_consulta);
+			
 			echo '
 					
 			<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
-			<body background="body2.jpg">
 			<p>PRODUCTOS ENCONTRATOS</p>
-			<form action="registrar_cliente2.php" method="post">
-
+			<div>
+				<form action="adicionar_multiplesproductos.php?cod='.$numeroconsulta.'&menu1=1&id_cliente='.$id_cliente.'&id_pedido='.$id_pedido.'" method="post">
 			';
 
 			echo '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" >
@@ -128,8 +148,12 @@ if($newvar == true)
 			<td class="campotablasSP2" >Stock</td>
 			<td class="campotablasSP2" >Marca</td>
 			<td class="campotablasSP2" >Industria</td>
+			<td class="campotablasSP2" >Seleccionar producto</td>
+			<td class="campotablasSP2" >cantidad</td>
 			<td class="campotablasSP2" >Detalles</td>
 			<td class="campotablasSP2" >Adicionar Producto</td>
+
+
 			</tr>';
 		
 			for ( $i=0; $i< cuantos_registros_bd($usuario_consulta); $i++)
@@ -154,11 +178,18 @@ if($newvar == true)
 					<td  class='campotablasSP'>&nbsp;".$registro['stock']."</td>
 					<td  class='campotablasSP'>&nbsp;".$registro['marca']." </td>
 					<td  class='campotablasSP'>&nbsp;".$registro['industria']."</td>
+					<td  class='campotablasSP'>"; ?>
+					
+					<input type='checkbox' name='check<?php echo $i; ?>' value='<?php echo $valueCod;?>' id='check<?php echo $i; ?>' onClick="enable('<?php echo $i; ?>');"> 
+					<?php
+					echo "Seleccionar</td><td class='campotablasSP'><input type='number' name='number".$i."' min='1' max='".$registro['stock']."' value='0' id='number".$i."' disabled></td>
+					
 					<td class='campotablas'><a href=mas_detalles_producto2.php?cod_producto=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Mas Detalles</a></td>
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";
 						
 				}	
@@ -169,6 +200,17 @@ if($newvar == true)
 
 
 		}
+		
+		echo '<table width="30%" border="0" align="center" >
+    <tr>
+      <td align="center">
+	  <input name="image"  type="image" onMouseOver= src="images/r2.gif" onMouseMove= src="images/r2.gif" onMouseOut=src="images/r1.gif" value="" SRC="images/r1.gif"> </td></form>
+      <form action="principal_target.php" method="post"><td align="center"><input name="cancelar"  type="image" onMouseOver= src="images/c2.gif" onMouseMove= src="images/c2.gif" onMouseOut=src="images/c1.gif" value="" SRC="images/c1.gif"> </td> </form>
+    </tr>
+  </table>
+</div>
+';
+		
 		
 	}
 
@@ -226,7 +268,7 @@ if($newvar == true)
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";						
 				}	
 					
@@ -289,7 +331,7 @@ if($newvar == true)
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";						
 				}	
 					
@@ -354,7 +396,7 @@ if($newvar == true)
 
 
 
-					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido."&menu1=1&buscar=".$var.">Adicionar Producto</a></td>";
+					<td class='campotablas'><a href=adicionar_producto.php?menu1=1&buscar=".$valueCod."&id_cliente=".$id_cliente."&id_pedido=".$id_pedido.">Adicionar Producto</a></td>";
 					echo "</tr>";						
 				}	
 					
@@ -566,8 +608,9 @@ if($newvar == true)
    
   
 ?>  
-  
-  
+
+
+
   
 <p>&nbsp;</p>
 

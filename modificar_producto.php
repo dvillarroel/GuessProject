@@ -122,7 +122,7 @@
 <td class="border-bmain"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="1"><img src="<?php echo 'Img_prod/'.$registro['imagen1'];?>" width="300" height="200"></td>
 <td class="border-bright"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="18"></td></tr>
 </table>
-<?php echo 'Img_prod/'.$registro['imagen1']; ?>
+<?php //echo 'Img_prod/'.$registro['imagen1']; ?>
 </td>
         <td >&nbsp;</td>
 </tr></tbody>
