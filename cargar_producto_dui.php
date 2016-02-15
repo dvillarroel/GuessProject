@@ -63,30 +63,28 @@
             <div class="row" style="height: 100%">
  
                 <div class="cell auto-size padding20 bg-white" id="cell-content">
-                    <h1 class="text-light">Administrar Productos<span class="mif-apps place-right"></span></h1>
+                    <h1 class="text-light">Cargar DUI a la base de datos<span class="mif-apps place-right"></span></h1>
                     <hr class="thin bg-grayLighter">
-					<li><a href="registrar_producto.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Registrar Nuevo Producto</span>
-                        </a></li><br>
-						<li><a href="actualizar_producto.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Modificar Informacion de Producto</span>
-                        </a></li><br>
-						<li><a href="cargar_producto.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Cargar / actualizar productos y stock</span>
-                        </a></li><br>
-						<li><a href="cargar_producto_dui.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Cargar DUI</span>
-                        </a></li><br>
-						<li><a href="ver_dui_report.php" target="mainFrame">
-                            <span class="mif-apps icon"></span>
-                            <span class="title">Ver DUIs</span>
-                        </a></li>
-                    <hr class="thin bg-grayLighter">
-				</div>
+ 
+
+<table width="80%" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr> 
+      <td height="31" ></td>
+      <td ></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+  <br>
+  <p align="center"><a href="cargar_producto_dui2.php" onclick="return confirm('Seguro que quieres registrar DUI, es recomendable realizar una copia de seguridad antes de proceder?');">REGISTRAR DUI</a></p>
+  <br>
+  <br>
+  <p align="center"><a href="administrar_productos.php">VOLVER ATRAS</a></p>
+<p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
+  
+</div>
             </div>
 		</div>
 	</div>
