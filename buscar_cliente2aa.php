@@ -383,6 +383,7 @@ if(!empty($_POST['buscar']))
 					$codigo_cliente=$registro['codigo_cliente'];
 					$usuario_consulta2 = mysql_query("SELECT sum(monto_saldo) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado';" );	
 					$a2=sacar_registro_bd($usuario_consulta2);
+					echo "SELECT sum(monto_saldo) as p FROM venta WHERE codigo_cliente=$codigo_cliente and estado_pagado='No Cancelado'";
 					$saldo=$a2['p'];
 					if($saldo == '')
 					{

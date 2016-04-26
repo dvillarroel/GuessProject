@@ -145,6 +145,8 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 					//echo $consulta."<br>";
 					echo "<font color='green'>El producto con codigo: ".$codigo_producto. " y DUI: ".$codigo_dui." fueron resgistrado en la base de datos, es necesario actualizar el stock de los productos</font><br>";
 					
+					
+					
 				}
 				else
 				{
@@ -156,6 +158,62 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 					mysql_query($consulta);	
 					//echo $consulta."<br>";	
 					echo "<font color='green'>El producto con codigo: ".$codigo_producto. " y DUI: ".$codigo_dui." fueron resgistrado en la base de datos, es necesario actualizar el stock de los productos</font><br>";
+				
+					$consultaProduct = consulta_bd("Select saldo, saldoMoney, leftDUI from kardex where productoID='$codigo_producto' order by id DESC LIMIT 1");
+					if(cuantos_registros_bd($consultaProduct) != 0 )
+					{
+						$consultaID = consulta_bd("Select max(id) as p from kardex");
+						$resultProduct = sacar_registro_bd($consultaProduct);
+						$resultid = sacar_registro_bd($consultaID);
+						if($resultid['p'] != null)
+						{
+							$codigoKardex =  $resultid['p'] + 1;	
+							
+						}
+						else
+						{
+							$codigoKardex =1;
+							
+						}
+						
+						$saldo = $resultid['saldo'] + $cantidad;
+						$haber = $cantidad * $precio;
+						$saldoMoney = $resultid['saldoMoney'] + $haber;
+						$leftDUI = $resultid['leftDUI'];
+						
+						$consultaKardex="insert into kardex values($codigoKardex, '$codigo_producto', '$nombre_producto', '$fecha',$cantidad, 0, $saldo, $precio, $haber,0,$saldoMoney,$codigo_dui, 'Ingreso producto Dui', $leftDUI );";
+						//echo $consultaKardex;
+						mysql_query($consultaKardex);	
+						
+						
+						
+					}
+					else
+					{
+						
+						$consultaID = consulta_bd("Select max(id) as p from kardex");
+						$resultid = sacar_registro_bd($consultaID);
+						if($resultid['p'] != null)
+						{
+							$codigoKardex =  $resultid['p'] + 1;	
+							
+						}
+						else
+						{
+							$codigoKardex =1;
+							
+						}
+						$saldo = $cantidad;
+						$haber = $cantidad * $precio;
+						$saldoMoney = $haber;
+						
+						$consultaKardex="insert into kardex values($codigoKardex, '$codigo_producto', '$nombre_producto', '$fecha',$cantidad, 0, $saldo, $precio, $haber,0,$saldoMoney,$codigo_dui, 'Ingreso producto Dui', $cantidad);";
+						//echo $consultaKardex;
+						mysql_query($consultaKardex);
+					}
+				
+					
+				
 				
 				}
 				$aux=1;

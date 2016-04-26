@@ -1,74 +1,84 @@
-<link href="hoja_de_estilo.css" type="text/css" rel="stylesheet">
+<html>
+<head>
+    <link rel='shortcut icon' type='image/x-icon' href='docs/favicon.ico' />
+    <link href="docs/css/metro.css" rel="stylesheet">
+    <link href="docs/css/metro-icons.css" rel="stylesheet">
+    <link href="docs/css/metro-responsive.css" rel="stylesheet">
 
- <script  language="JavaScript" src="validacion.js" type="text/javascript"></script>
- <SCRIPT language="javascript">
-		  function validarFormulario(formulario)
-		    {
-		     return ((vacio(formulario.ci.value,"NOMBRE PRODUCTO"))&&
-		     (vacio(formulario.apellido_paterno.value,"PRECIO DEL PRODUCTO")));
-		}	
-</SCRIPT>
+    <script src="docs/js/jquery-2.1.3.min.js"></script>
+    <script src="docs/js/jquery.dataTables.min.js"></script>
 
- <style type="text/css">
-<!--
-.Estilo1 {color: #330000}
--->
- </style>
- <body background="body2.jpg">
+    <script src="docs/js/metro.js"></script>
 
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+        }
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px){
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+
+    <script>
+        function pushMessage(t){
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function(){
+            $('.sidebar').on('click', 'li', function(){
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+</head>
+<body class="bg-steel">
+   <div class="page-content2">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
  
-
-<br>
-<table width="40%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td class="panel-titulo2"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-    <td class="panel-titulo3" align="center">&nbsp;</td>
-	<td class="panel-titulo3" width="100%" align="center"><font class="titulo_formulario">CARGAR PRODUCTOS A LA BASE DE DATOS</font></td>
-    <td class="panel-titulo"><img src="../images/blank.gif" alt="" style="display: block;" height="18" width="16"></td>
-  </tr>
-</table>
-
-
-<table width="80%" align="center" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr> 
-      <td height="31" ></td>
-      <td ></td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-
-  <br>
-  <p align="center"><a href="cargar_producto3.php" onclick="return confirm('Seguro que quieres registrar nuevos productos en el sistema?');">REGISTRAR NUEVOS PRODUCTOS</a></p>
-  <br>
-  <p align="center"><a href="actualizar_producto2.php" onclick="return confirm('Seguro que quieres actualizar las propiedades de todos los productos?');">ACTUALIZAR PRODUCTOS</a></p>
-  <br>
-  <p align="center"><a href="actualizar_stock_producto2.php" onclick="return confirm('Seguro que quieres actualizar el Stock de todos los productos?');" >ACTUALIZAR STOCK PRODUCTOS</a></p>
-  <br>
-  <p align="center"><a href="administrar_productos.php">VOLVER ATRAS</a></p>
-<p align="center"><a href="principal_target.php">VOLVER A LA PAGINA PRINCIPAL</a></p>
-  
-  
-  <?php 
-  if( !empty($_GET['error_registro']) )
-{
-	$respuesta=null;
-	if($_GET['error_registro'] == 1)
-	{
-		$respuesta='TIENE QUE LLENAR TODOS LOS CAMPOS QUE SON NECESARIOS';
-	}
-		
-	echo '<br><br><table width="30%" border="0" align="center" cellpadding="0" cellspacing="0">
-  		<tr>
-    		<td><font color="#003366">'.$respuesta.'</font></td>
-  		</tr>
-	</table>';
-
-
-}
-
-  
-  
-  ?>
-  
+                <div class="cell auto-size padding20 bg-white" id="cell-content">
+                    <h1 class="text-light">Cargar Productos a la Base de Datos del Sistema<span class="mif-apps place-right"></span></h1>
+                    <hr class="thin bg-grayLighter">
+					<li><a a href="cargar_producto3.php" onclick="return confirm('Seguro que quieres registrar nuevos productos en el sistema?');" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Registrar Nuevos Productos</span>
+                        </a></li><br>
+						<li><a href="actualizar_producto2.php" onclick="return confirm('Seguro que quieres actualizar las propiedades de todos los productos?');" target="mainFrame">
+                            <span class="mif-apps icon"></span>
+                            <span class="title">Actualizar Productos</span>
+                        </a></li><br>
+					<hr class="thin bg-grayLighter">
+					<p align="center"><a href="Administrar_productos.php">VOLVER ATRAS</a></p>
+				</div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>
+ 
