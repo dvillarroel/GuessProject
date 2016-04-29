@@ -132,7 +132,7 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
             $cell15 = $worksheet->getCellByColumnAndRow(13,$row);
 			$Precio_Irreg=$cell15->getValue();
 		
-			$consulta="UPDATE `motos`.`producto` SET `CODIGO_PRODUCTO`='$nuevo_codigo_producto',`NOMBRE_PRODUCTO`='$name',`NOMBRE_CHINO`='$nchino',`NOMBRE_INGLES`='$ningles',`PRECIO_UNITARIO_PROD`=$precio,`MARCA`='$marca',`INDUSTRIA`='$industria',
+			$consulta="UPDATE producto SET `CODIGO_PRODUCTO`='$nuevo_codigo_producto',`NOMBRE_PRODUCTO`='$name',`NOMBRE_CHINO`='$nchino',`NOMBRE_INGLES`='$ningles',`PRECIO_UNITARIO_PROD`=$precio,`MARCA`='$marca',`INDUSTRIA`='$industria',
 			`STOCK_MINIMO`=$stock_minimo,`UNIDAD`='$unidad',`OBSERVACIONES_PRODUCTO`='$observaciones',`IMAGEN1`='$imagen',`PREFERENCIAL`=$Precio_pref,`REGULAR`=$Precio_Reg,`IRREGULAR`=$Precio_Irreg WHERE `CODIGO_PRODUCTO`='$codigo_producto'";
 			
 	//echo $consulta;

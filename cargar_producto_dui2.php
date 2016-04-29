@@ -185,6 +185,11 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 						//echo $consultaKardex;
 						mysql_query($consultaKardex);	
 						
+						$consultaStock="UPDATE producto SET `stock`= $saldo WHERE `CODIGO_PRODUCTO`='$codigo_producto'";
+						mysql_query($consultaStock);
+
+						
+						
 						
 						
 					}
@@ -210,6 +215,9 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 						$consultaKardex="insert into kardex values($codigoKardex, '$codigo_producto', '$nombre_producto', '$fecha',$cantidad, 0, $saldo, $precio, $haber,0,$saldoMoney,$codigo_dui, 'Ingreso producto Dui', $cantidad);";
 						//echo $consultaKardex;
 						mysql_query($consultaKardex);
+						
+						$consultaStock="UPDATE producto SET `stock`= $saldo WHERE `CODIGO_PRODUCTO`='$codigo_producto'";
+						mysql_query($consultaStock);
 					}
 				
 					

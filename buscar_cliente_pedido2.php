@@ -415,9 +415,9 @@ $querydatosuser = sacar_registro_bd($consultauser);
 		
 		
 				$querypagos = mysql_query("SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido");
-				
-							
-				if (mysql_num_rows($querypagos) != 0)
+				echo "SELECT saldo FROM pago_pedido where id_venta=$codigo_pedido";
+						
+				if (cuantos_registros_bd($querypagos) != 0)
 				{	
 					//$querydatos = sacar_registro_bd($querypagos);
 				}

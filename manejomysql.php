@@ -7,7 +7,7 @@
 	$servidorBD = "127.0.0.1";
 	$usuario = "dvuser";
 	$clave = "Control123";
-	$BD = "motos";
+	$BD = "motos4";
     $enlace = 0;
 // funcion de conexion a una BD MySql
 function conectar_bd()
@@ -18,7 +18,7 @@ function conectar_bd()
    global $clave;
    global $BD;
 $enlace= mysql_connect("localhost","root","") or die(mysql_error());
-mysql_select_db("motos") or die(mysql_error());  
+mysql_select_db("motos4") or die(mysql_error());  
 
 			//echo "nos conectamos
 
